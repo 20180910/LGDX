@@ -245,6 +245,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
     private void getValue() {
         type = getIntent().getStringExtra(Constant.IParam.type);
         image_url = getIntent().getStringExtra(Constant.IParam.image_url);
+        Log.d("=========","==image_url=="+image_url);
 
         courseware_id = getIntent().getStringExtra(Constant.IParam.courseware_id);
         if (type.equals("0")) {
@@ -521,6 +522,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
             showMsg("无效下载地址");
             return;
         }
+
 
         AppInfo info=new AppInfo(studyDetailObj.getCourseware_id(),studyDetailObj.getTitle(),studyDetailObj.getTitle(),image_url,studyDetailObj.getVideo_pdf());
         showLoading();

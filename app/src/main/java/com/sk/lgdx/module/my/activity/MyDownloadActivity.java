@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.github.androidtools.inter.MyOnClickListener;
 import com.github.baseclass.adapter.BaseRecyclerAdapter;
 import com.github.baseclass.adapter.RecyclerViewHolder;
 import com.github.baseclass.rx.IOCallBack;
@@ -17,8 +18,10 @@ import com.github.customview.MyTextView;
 import com.sk.lgdx.R;
 import com.sk.lgdx.base.BaseActivity;
 import com.sk.lgdx.tools.AndroidUtils;
+import com.sk.lgdx.tools.IntentUtils;
 import com.sk.lgdx.tools.download.entity.AppInfo;
 import com.sk.lgdx.tools.download.util.DownloadUtils;
+import com.sk.lgdx.tools.download.util.FileUtils;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -66,15 +69,27 @@ public class MyDownloadActivity extends BaseActivity {
                 Log.d("=======","=====bean.getImage()="+bean.getImage());
                 Glide.with(mContext).load(bean.getImage()).error(R.color.c_press).into(iv_item_my_download_icon);
                 tv_item_my_download_name.setText(bean.getTitle());
-                tv_item_my_download_type.setText(bean.getHouZhui());
+                if (bean.getHouZhui().equals("mp4")) {
+                    tv_item_my_download_type.setText("视频");
+                }else {
+                    tv_item_my_download_type.setText("PDF");
+                }
+
                 tv_item_my_download_size.setText(formetFileSize(Double.parseDouble(bean.getFileSize())));
 //
                 if (isEdit) {
                     ch_item_my_download.setVisibility(View.VISIBLE);
-
                 }else {
                     ch_item_my_download.setVisibility(View.GONE);
                 }
+                holder.itemView.setOnClickListener(new MyOnClickListener() {
+                    @Override
+                    protected void onNoDoubleClick(View view) {
+                        String path=FileUtils.getDownloadDir()+"/"+bean.getFileName();
+                        IntentUtils.openFileIntent(mContext,path);
+                    }
+                });
+
 
 
             }
@@ -84,6 +99,19 @@ public class MyDownloadActivity extends BaseActivity {
         rv_my_download.setAdapter(adapter);
 
 
+
+    }
+
+    @Override
+    protected void initData() {
+        showProgress();
+//        adapter.setList(downloadCompleteFile,true);
+        getData(1,false);
+    }
+
+    @Override
+    protected void getData(int page, boolean isLoad) {
+        super.getData(page, isLoad);
         RXStart(new IOCallBack<List<AppInfo>>() {
             @Override
             public void call(Subscriber<? super List<AppInfo>> subscriber) {
@@ -93,18 +121,17 @@ public class MyDownloadActivity extends BaseActivity {
             @Override
             public void onMyNext(List<AppInfo> appInfos) {
                 adapter.setList(appInfos,true);
+                pl_load.showContent();
+            }
+
+            @Override
+            public void onMyError(Throwable e) {
+                super.onMyError(e);
+                pl_load.showErrorText();
             }
         });
 
     }
-
-    @Override
-    protected void initData() {
-
-//        adapter.setList(downloadCompleteFile,true);
-
-    }
-
 
     @OnClick({R.id.app_right_tv, R.id.tv_my_download_quanxuan})
     public void onViewClick(View v) {

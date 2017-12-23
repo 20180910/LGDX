@@ -8,100 +8,103 @@
     >
 <include layout="@layout/app_title"/>
 
+<com.sk.lgdx.base.ProgressLayout
+    android:id="@id/pl_load"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
 
-        <RelativeLayout
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_my_download"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true">
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_my_download_bianji"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/background_f2"
+            android:orientation="vertical"
             >
 
-
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rv_my_download"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true">
-                </android.support.v7.widget.RecyclerView>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/gray_d7"/>
 
             <LinearLayout
-                android:visibility="gone"
-                android:id="@+id/ll_my_download_bianji"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_alignParentBottom="true"
-                android:background="@color/background_f2"
-                android:orientation="vertical"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
                 >
 
+                <TextView
+                    android:id="@+id/tv_my_download_quanxuan"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="全选"
+                    android:textColor="@color/gray_66"
+                    android:textSize="15sp"
+                    />
+
                 <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2px"
+                    android:layout_width="2px"
+                    android:layout_height="match_parent"
                     android:background="@color/gray_d7"/>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:id="@+id/ll_my_download_delete"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
                     android:orientation="horizontal"
                     >
 
                     <TextView
-                        android:id="@+id/tv_my_download_quanxuan"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:gravity="center"
-                        android:text="全选"
-                        android:textColor="@color/gray_66"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+
+                        android:text="删除"
+                        android:textColor="@color/red"
                         android:textSize="15sp"
                         />
 
-                    <View
-                        android:layout_width="2px"
-                        android:layout_height="match_parent"
-                        android:background="@color/gray_d7"/>
-
-                    <LinearLayout
-                        android:id="@+id/ll_my_download_delete"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
+                    <com.github.customview.MyTextView
+                        android:id="@+id/tv_my_download_detele"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="5dp"
                         android:gravity="center"
-                        android:orientation="horizontal"
-                        >
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-
-                            android:text="删除"
-                            android:textColor="@color/red"
-                            android:textSize="15sp"
-                            />
-
-                        <com.github.customview.MyTextView
-                            android:id="@+id/tv_my_download_detele"
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="5dp"
-                            android:gravity="center"
-                            android:text="1"
-                            android:textColor="@color/red"
-                            android:textSize="13sp"
-                            app:my_tv_border_color="@color/red"
-                            app:my_tv_border_width="1dp"
-                            app:my_tv_corner_radius="10dp"/>
-
-                    </LinearLayout>
-                    />
-
+                        android:text="1"
+                        android:textColor="@color/red"
+                        android:textSize="13sp"
+                        app:my_tv_border_color="@color/red"
+                        app:my_tv_border_width="1dp"
+                        app:my_tv_corner_radius="10dp"/>
 
                 </LinearLayout>
+                />
+
 
             </LinearLayout>
 
+        </LinearLayout>
 
-        </RelativeLayout>
+
+    </RelativeLayout>
+</com.sk.lgdx.base.ProgressLayout>
+
 </LinearLayout>
