@@ -9,11 +9,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.github.baseclass.adapter.BaseRecyclerAdapter;
 import com.github.baseclass.adapter.RecyclerViewHolder;
+import com.github.baseclass.rx.IOCallBack;
 import com.github.customview.MyTextView;
 import com.sk.lgdx.R;
 import com.sk.lgdx.base.BaseActivity;
+import com.sk.lgdx.tools.AndroidUtils;
 import com.sk.lgdx.tools.download.entity.AppInfo;
 import com.sk.lgdx.tools.download.util.DownloadUtils;
 
@@ -22,6 +25,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.Subscriber;
 
 /**
  * Created by Administrator on 2017/12/5.
@@ -51,10 +55,7 @@ public class MyDownloadActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-
-        List<AppInfo> downloadCompleteFile = DownloadUtils.getDownloadCompleteFile(mContext);
-        Log.d("======","=====downloadCompleteFile="+downloadCompleteFile.size());
-        adapter=new BaseRecyclerAdapter<AppInfo>(mContext,R.layout.item_my_download) {
+        adapter=new BaseRecyclerAdapter<AppInfo>(mContext, R.layout.item_my_download) {
             @Override
             public void bindData(RecyclerViewHolder holder, int i, AppInfo bean) {
                 CheckBox ch_item_my_download = (CheckBox) holder.getView(R.id.ch_item_my_download);
@@ -62,12 +63,12 @@ public class MyDownloadActivity extends BaseActivity {
                 TextView tv_item_my_download_name = holder.getTextView(R.id.tv_item_my_download_name);
                 TextView tv_item_my_download_type = holder.getTextView(R.id.tv_item_my_download_type);
                 TextView tv_item_my_download_size = holder.getTextView(R.id.tv_item_my_download_size);
-//                Glide.with(mContext).load(bean.getImage()).error(R.color.c_press).into(iv_item_my_download_icon);
-//                tv_item_my_download_name.setText(bean.getTitle());
-//                tv_item_my_download_type.setText(bean.getHouZhui());
-//                tv_item_my_download_size.setText(bean.getFileSize());
+                Log.d("=======","=====bean.getImage()="+bean.getImage());
+                Glide.with(mContext).load(bean.getImage()).error(R.color.c_press).into(iv_item_my_download_icon);
+                tv_item_my_download_name.setText(bean.getTitle());
+                tv_item_my_download_type.setText(bean.getHouZhui());
+                tv_item_my_download_size.setText(formetFileSize(Double.parseDouble(bean.getFileSize())));
 //
-
                 if (isEdit) {
                     ch_item_my_download.setVisibility(View.VISIBLE);
 
@@ -78,13 +79,22 @@ public class MyDownloadActivity extends BaseActivity {
 
             }
         };
-        adapter.setTestListSize(10);
         rv_my_download.setLayoutManager(new LinearLayoutManager(mContext));
         rv_my_download.setNestedScrollingEnabled(false);
         rv_my_download.setAdapter(adapter);
 
 
-
+        RXStart(new IOCallBack<List<AppInfo>>() {
+            @Override
+            public void call(Subscriber<? super List<AppInfo>> subscriber) {
+                subscriber.onNext(DownloadUtils.getDownloadCompleteFile(mContext));
+                subscriber.onCompleted();
+            }
+            @Override
+            public void onMyNext(List<AppInfo> appInfos) {
+                adapter.setList(appInfos,true);
+            }
+        });
 
     }
 
@@ -96,7 +106,7 @@ public class MyDownloadActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.app_right_tv,R.id.tv_my_download_quanxuan})
+    @OnClick({R.id.app_right_tv, R.id.tv_my_download_quanxuan})
     public void onViewClick(View v) {
         switch (v.getId()) {
             case R.id.app_right_tv:
@@ -117,21 +127,20 @@ public class MyDownloadActivity extends BaseActivity {
 
     }
     public  String formetFileSize(Double fileS) {
-
-        DecimalFormat df = new DecimalFormat("#0.0");
+        DecimalFormat df = new DecimalFormat("#0.00");
         String fileSizeString = "";
         if (fileS < 1024) {
             fileSizeString = df.format((double) fileS) + "B";
         } else if (fileS < 1048576) {
-            fileSizeString = df.format((double) fileS / 1024) + "K";
+            fileSizeString = df.format(AndroidUtils.chuFa(fileS, 1024)) + "K";
         } else if (fileS < 1073741824) {
-            fileSizeString = df.format((double) fileS / 1048576) + "M";
+            fileSizeString = df.format(AndroidUtils.chuFa(fileS, 1048576)) + "M";
         } else {
-            fileSizeString = df.format((double) fileS / 1073741824) + "G";
+            fileSizeString = df.format(AndroidUtils.chuFa(fileS, 1073741824)) + "G";
         }
         return fileSizeString;
     }
-
+/*update table set name=? age =? where id=?*/
 
     @OnClick(R.id.tv_my_download_quanxuan)
     public void onClick() {

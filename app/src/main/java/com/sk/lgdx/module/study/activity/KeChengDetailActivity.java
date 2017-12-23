@@ -103,7 +103,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
 
     private ImageView[] mImageViews;
     List<String> imgIdArray = new ArrayList<>();
-    String type, courseware_id;
+    String type, courseware_id,image_url;
     BaseRecyclerAdapter adapter;
 
     private boolean isPlay;
@@ -244,6 +244,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
 
     private void getValue() {
         type = getIntent().getStringExtra(Constant.IParam.type);
+        image_url = getIntent().getStringExtra(Constant.IParam.image_url);
 
         courseware_id = getIntent().getStringExtra(Constant.IParam.courseware_id);
         if (type.equals("0")) {
@@ -521,7 +522,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
             return;
         }
 
-        AppInfo info=new AppInfo(studyDetailObj.getCourseware_id(),studyDetailObj.getTitle(),studyDetailObj.getTitle(),studyDetailObj.getKeynote_speaker_image(),studyDetailObj.getVideo_pdf());
+        AppInfo info=new AppInfo(studyDetailObj.getCourseware_id(),studyDetailObj.getTitle(),studyDetailObj.getTitle(),image_url,studyDetailObj.getVideo_pdf());
         showLoading();
         RXStart(new IOCallBack<Boolean>() {
             @Override
@@ -542,7 +543,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
         Map<String,String>map=new HashMap<String,String>();
         map.put("user_id",getUserId());
         map.put("courseware_id",courseware_id);
-        map.put("sign",GetSign.getSign(map));
+        map.put("sign", GetSign.getSign(map));
         ApiRequest.getCollectMerchant(map, new MyCallBack<BaseObj>(mContext) {
             @Override
             public void onSuccess(BaseObj obj) {
@@ -564,7 +565,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
         map.put("user_id",getUserId());
         map.put("forum_courseware_id",courseware_id);
         map.put("type",2+"");
-        map.put("sign",GetSign.getSign(map));
+        map.put("sign", GetSign.getSign(map));
         com.sk.lgdx.module.taolun.network.ApiRequest.getthumbupForum(map, new MyCallBack<DianzanObj>(mContext) {
             @Override
             public void onSuccess(DianzanObj obj) {

@@ -42,7 +42,7 @@ public class StudyDetailFragment extends BaseFragment {
 
     @BindView(R.id.rv_study_history)
     RecyclerView rv_study_history;
-    BaseRecyclerAdapter  todayAdapter;
+    BaseRecyclerAdapter todayAdapter;
 
     LoadMoreAdapter historyAdapter;
 
@@ -63,7 +63,7 @@ public class StudyDetailFragment extends BaseFragment {
     @Override
     protected void initView() {
 
-        todayAdapter=new BaseRecyclerAdapter<HistoryCourseWareListObj.TodayCourseWareBean>(mContext,R.layout.item_study_today) {
+        todayAdapter=new BaseRecyclerAdapter<HistoryCourseWareListObj.TodayCourseWareBean>(mContext, R.layout.item_study_today) {
             @Override
             public void bindData(RecyclerViewHolder holder, int position, HistoryCourseWareListObj.TodayCourseWareBean bean) {
                 ImageView iv_item_study_tody_icon = holder.getImageView(R.id.iv_item_study_tody_icon);
@@ -74,7 +74,7 @@ public class StudyDetailFragment extends BaseFragment {
 
 
                 LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT);
-                layoutParams.width = (PhoneUtils.getScreenWidth(mContext)-PhoneUtils.dip2px(mContext,20))/2;
+                layoutParams.width = (PhoneUtils.getScreenWidth(mContext)- PhoneUtils.dip2px(mContext,20))/2;
                 layoutParams.height = (int) ( layoutParams.width*0.64);
 
                 iv_item_study_tody_icon.setLayoutParams(layoutParams);
@@ -92,10 +92,12 @@ public class StudyDetailFragment extends BaseFragment {
                         if (video_pdf.equals("mp4")) {
                             intent.putExtra(Constant.IParam.type,"0");
                             intent.putExtra(Constant.IParam.courseware_id,bean.getCourseware_id());
+                            intent.putExtra(Constant.IParam.image_url,bean.getImage_url());
                             STActivity(intent,KeChengDetailActivity.class);
                         }else {
                             intent.putExtra(Constant.IParam.type,"1");
                             intent.putExtra(Constant.IParam.courseware_id,bean.getCourseware_id());
+                            intent.putExtra(Constant.IParam.image_url,bean.getImage_url());
                             STActivity(intent,KeChengDetailActivity.class);
                         }
                     }
@@ -111,7 +113,7 @@ public class StudyDetailFragment extends BaseFragment {
         rv_study_today.setAdapter(todayAdapter);
 
 
-        historyAdapter=new LoadMoreAdapter<HistoryCourseWareListObj.HistoryCourseWareBean>(mContext,R.layout.item_study_history,pageSize,nsv) {
+        historyAdapter=new LoadMoreAdapter<HistoryCourseWareListObj.HistoryCourseWareBean>(mContext, R.layout.item_study_history,pageSize,nsv) {
             @Override
             public void bindData(LoadMoreViewHolder holder, int position, HistoryCourseWareListObj.HistoryCourseWareBean bean) {
                 ImageView iv_item_study_history_icon = holder.getImageView(R.id.iv_item_study_history_icon);
