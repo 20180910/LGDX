@@ -678,19 +678,6 @@ public abstract class BaseActivity extends IBaseActivity implements ProgressLayo
         }
         fenXiangDialog.show();
     }
-//    public boolean keJian(View view) {
-//        int screenWidth = PhoneUtils.getScreenWidth(mContext);
-//        int screenHeight = PhoneUtils.getScreenHeight(mContext);
-//
-//        Rect rect = new Rect(0, 0, screenWidth, screenHeight);
-//        int[] location = new int[2];
-//        view.getLocationInWindow(location);
-//        System.out.println(Arrays.toString(location));
-//        // Rect ivRect=new Rect(imageView.getLeft(),imageView.getTop(),imageView.getRight(),imageView.getBottom());
-//        if (view.getLocalVisibleRect(rect)) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+
+
 }

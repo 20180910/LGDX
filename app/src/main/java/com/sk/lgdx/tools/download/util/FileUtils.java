@@ -2,6 +2,7 @@ package com.sk.lgdx.tools.download.util;
 
 import android.os.Environment;
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 import java.io.File;
 
@@ -29,5 +30,22 @@ public class FileUtils {
 
     public static final String getSuffix(@NonNull String fileName) {
         return fileName.substring(fileName.lastIndexOf(".") + 1);
+    }
+
+    public static boolean deleteFile(String fileName) {
+        File file = new File(fileName);
+        // 如果文件路径所对应的文件存在，并且是一个文件，则直接删除
+        if (file.exists() && file.isFile()) {
+            if (file.delete()) {
+                Log.i("===","删除单个文件" + fileName + "成功！");
+                return true;
+            } else {
+                Log.i("===","删除单个文件" + fileName + "失败！");
+                return false;
+            }
+        } else {
+            Log.i("===","文件" + fileName + "不存在！");
+            return false;
+        }
     }
 }
