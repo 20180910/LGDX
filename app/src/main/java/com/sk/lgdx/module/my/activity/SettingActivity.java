@@ -1,0 +1,147 @@
+package com.sk.lgdx.module.my.activity;
+
+import android.content.Intent;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.github.androidtools.SPUtils;
+import com.github.baseclass.view.MyDialog;
+import com.sk.lgdx.Config;
+import com.sk.lgdx.GetSign;
+import com.sk.lgdx.R;
+import com.sk.lgdx.base.BaseActivity;
+import com.sk.lgdx.base.BaseObj;
+import com.sk.lgdx.base.MyCallBack;
+import com.sk.lgdx.module.my.network.ApiRequest;
+import com.suke.widget.SwitchButton;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import butterknife.BindView;
+import butterknife.OnClick;
+
+/**
+ * Created by Administrator on 2017/12/5.
+ */
+
+public class SettingActivity extends BaseActivity {
+    @BindView(R.id.ll_setting_xiugai)
+    LinearLayout ll_setting_xiugai;
+    @BindView(R.id.tv_setting_huancun)
+    TextView tv_setting_huancun;
+    @BindView(R.id.ll_setting_huancun)
+    LinearLayout ll_setting_huancun;
+    @BindView(R.id.sb_setting)
+    SwitchButton sb_setting;
+    @BindView(R.id.tv_setting_sign_out)
+    TextView tv_setting_sign_out;
+    boolean user_switch;
+
+    @Override
+    protected int getContentView() {
+        setAppTitle("设置");
+        setBackIcon(R.drawable.back_white);
+        return R.layout.act_setting;
+    }
+
+    @Override
+    protected void initView() {
+        user_switch=SPUtils.getPrefBoolean(mContext,Config.user_switch,false);
+        if (user_switch) {
+            sb_setting.setChecked(true);
+        }else {
+            sb_setting.setChecked(false);
+        }
+        sb_setting.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent) {
+                if (motionEvent.getAction()== MotionEvent.ACTION_UP){
+                    setSwitch();
+                }
+                return true;
+            }
+        });
+
+    }
+    private void setSwitch() {
+        boolean checked = sb_setting.isChecked();
+        showLoading();
+        Map<String,String> map=new HashMap<String,String>();
+        map.put("user_id",getUserId());
+        map.put("message_sink",!checked?"1":"0");
+        map.put("sign", GetSign.getSign(map));
+        ApiRequest.getMessageSink(map, new MyCallBack<BaseObj>(mContext) {
+            @Override
+            public void onSuccess(BaseObj obj) {
+                showMsg(obj.getMsg());
+                sb_setting.setChecked(!checked);
+                SPUtils.setPrefBoolean(mContext, Config.user_switch, !checked);
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                super.onError(e);
+                sb_setting.setChecked(checked);
+            }
+        });
+    }
+
+
+    @Override
+    protected void initData() {
+
+    }
+
+
+    @OnClick({R.id.ll_setting_xiugai, R.id.ll_setting_huancun,R.id.tv_setting_sign_out})
+    public void onViewClick(View view) {
+        switch (view.getId()) {
+            case R.id.ll_setting_xiugai:
+                STActivity(SettingPwdActivity.class);
+                break;
+            case R.id.ll_setting_huancun:
+                break;
+            case R.id.tv_setting_sign_out:
+                mDialog = new MyDialog.Builder(mContext);
+                mDialog.setMessage("是否确认退出登录?")
+                        .setNegativeButton((dialog, which) -> dialog.dismiss())
+                        .setPositiveButton((dialog, which) -> {
+                            dialog.dismiss();
+                            startExit();
+                            exitLogin();
+
+                        });
+                mDialog.create().show();
+
+
+
+//                STActivity(LoginActivity.class);
+
+                break;
+        }
+    }
+    private void exitLogin() {
+        SPUtils.removeKey(mContext, Config.user_id);
+        Intent intent = new Intent(Config.exitAPP);
+//        intent.putExtra(Config.Bro.flag, Config.Bro.exit_login);
+//        LocalBroadcastManager.getInstance(mContext).sendBroadcast(intent);
+        STActivity(intent,LoginActivity.class);
+        finish();
+    }
+    private void startExit() {
+        Map<String,String> map=new HashMap<String,String>();
+        map.put("user_id",getUserId());
+        map.put("sign", GetSign.getSign(map));
+      com.sk.lgdx.network.ApiRequest.getLogOut(map, new MyCallBack<BaseObj>(mContext) {
+            @Override
+            public void onSuccess(BaseObj obj) {
+
+            }
+        });
+
+    }
+
+}

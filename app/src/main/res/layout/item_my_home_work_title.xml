@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/background_f2"
+    >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@color/white"
+    android:padding="10dp"
+    >
+    <View
+        android:layout_width="3dp"
+        android:layout_height="match_parent"
+        android:background="@color/theme_color"
+        />
+    <TextView
+        android:id="@+id/tv_my_home_work_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="今日作业"
+        android:layout_marginLeft="6dp"
+        android:textSize="15sp"
+        android:textColor="@color/gray_66"
+        />
+</LinearLayout>
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_item_my_home_work"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="2px"
+        >
+        
+    </android.support.v7.widget.RecyclerView>
+
+</LinearLayout>

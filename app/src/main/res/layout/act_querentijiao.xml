@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+    >
+<include layout="@layout/app_title"/>
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            >
+            <com.github.customview.MyEditText
+                android:layout_marginTop="10dp"
+                android:id="@+id/et_querentijiao_fankui"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+              app:my_et_solid="@color/white"
+                app:my_et_hiddenClear="true"
+                android:gravity="top"
+                android:padding="10dp"
+                android:hint="说出你作业中遇到的问题(可以为空)"
+                android:textSize="14sp"
+                android:textColor="@color/gray_99"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/background_f2"
+                />
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_querentijiao_img"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:padding="10dp">
+            </android.support.v7.widget.RecyclerView>
+
+            <com.github.customview.MyTextView
+                android:id="@+id/tv_querentijiao"
+
+                android:layout_margin="10dp"
+
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:textSize="15sp"
+                android:gravity="center"
+                app:my_tv_solid="@color/home_text_color"
+                android:textColor="@color/white"
+                android:text="确认提交"
+                />
+
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>
