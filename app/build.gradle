@@ -100,4 +100,7 @@ dependencies {
 
     compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
     compile 'cn.yipianfengye.android:zxing-library:2.2'
+
+
+    compile 'com.lidong.pdf:android_pdf:1.0.1'
 }
