@@ -83,6 +83,12 @@
                        android:id="@+id/vp_kecheng_detail"
                        android:layout_width="fill_parent"
                        android:layout_height="200dp" />
+                   <com.github.barteksc.pdfviewer.PDFView
+                       android:visibility="gone"
+                       android:layout_below="@+id/ll_kecheng_detail_title"
+                       android:id="@+id/pdf_kecheng_detail"
+                       android:layout_width="fill_parent"
+                       android:layout_height="200dp" />
 
                    <TextView
                        android:id="@+id/tv_kecheng_detail_bg"

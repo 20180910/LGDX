@@ -93,12 +93,14 @@ public class StudyDetailFragment extends BaseFragment {
                         if (video_pdf.equals("mp4")) {
                             intent.putExtra(Constant.IParam.type,"0");
                             intent.putExtra(Constant.IParam.courseware_id,bean.getCourseware_id());
+                            intent.putExtra(Constant.IParam.video_pdf,bean.getVideo_pdf());
                             intent.putExtra(Constant.IParam.image_url,bean.getImage_url());
                             STActivity(intent,KeChengDetailActivity.class);
                             Log.d("=========","==intent=="+bean.getImage_url());
                         }else {
                             intent.putExtra(Constant.IParam.type,"1");
                             intent.putExtra(Constant.IParam.courseware_id,bean.getCourseware_id());
+                            intent.putExtra(Constant.IParam.video_pdf,bean.getVideo_pdf());
                             intent.putExtra(Constant.IParam.image_url,bean.getImage_url());
                             STActivity(intent,KeChengDetailActivity.class);
                         }

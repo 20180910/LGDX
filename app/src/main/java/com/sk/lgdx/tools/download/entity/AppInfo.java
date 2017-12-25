@@ -28,6 +28,15 @@ public class AppInfo implements Serializable {
     private int progress;
     private String downloadPerSize;
     private int status;
+    private boolean isSelect;
+
+    public boolean isSelect() {
+        return isSelect;
+    }
+
+    public void setSelect(boolean select) {
+        isSelect = select;
+    }
 
     public AppInfo() {
     }

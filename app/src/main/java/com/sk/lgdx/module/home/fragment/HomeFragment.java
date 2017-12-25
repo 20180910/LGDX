@@ -270,7 +270,7 @@ public class HomeFragment extends BaseFragment {
 
     private void getTypeAssemBlage() {
         Map<String, String> map = new HashMap<String, String>();
-        map.put("user_id", getUserId());
+        map.put("rnd", getRnd());
         map.put("sign", GetSign.getSign(map));
         ApiRequest.getTypeAssemBlage(map, new MyCallBack<List<TypeAssemBlageObj>>(mContext) {
             @Override

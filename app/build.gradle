@@ -94,6 +94,8 @@ dependencies {
     /**/
     //视频播放
     compile 'com.shuyu:GSYVideoPlayer:2.1.1'
+    //pdf
+    compile 'com.github.barteksc:android-pdf-viewer:3.0.0-beta.4'
 
 
     compile 'me.zhanghai.android.materialratingbar:library:1.0.2'
