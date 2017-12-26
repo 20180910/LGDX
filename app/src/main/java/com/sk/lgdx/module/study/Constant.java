@@ -28,6 +28,7 @@ public class Constant {
         public static final String jiaCai="jiaCai";
         public static final String course_type_id="course_type_id";
         public static final String video_pdf="video_pdf";
+        public static final String title="title";
         public static final String courseware_id="courseware_id";
         public static final String image_url="image_url";
         public static final String comments_id="comments_id";//评论id

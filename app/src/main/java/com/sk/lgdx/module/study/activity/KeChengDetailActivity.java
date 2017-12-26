@@ -1,7 +1,7 @@
 package com.sk.lgdx.module.study.activity;
 
+import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Canvas;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -18,12 +18,6 @@ import com.bumptech.glide.Glide;
 import com.flyco.tablayout.CommonTabLayout;
 import com.flyco.tablayout.listener.CustomTabEntity;
 import com.github.androidtools.inter.MyOnClickListener;
-import com.github.barteksc.pdfviewer.PDFView;
-import com.github.barteksc.pdfviewer.listener.OnDrawListener;
-import com.github.barteksc.pdfviewer.listener.OnErrorListener;
-import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener;
-import com.github.barteksc.pdfviewer.listener.OnPageChangeListener;
-import com.github.barteksc.pdfviewer.listener.OnPageScrollListener;
 import com.github.baseclass.adapter.BaseRecyclerAdapter;
 import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.rx.MySubscriber;
@@ -39,6 +33,7 @@ import com.sk.lgdx.R;
 import com.sk.lgdx.base.BaseActivity;
 import com.sk.lgdx.base.BaseObj;
 import com.sk.lgdx.base.MyCallBack;
+import com.sk.lgdx.module.home.event.DownLoadSuccessEvent;
 import com.sk.lgdx.module.study.Constant;
 import com.sk.lgdx.module.study.bean.KeChengDetailBean;
 import com.sk.lgdx.module.study.event.ScrollViewEvent;
@@ -53,10 +48,6 @@ import com.sk.lgdx.tools.download.util.DownloadUtils;
 import com.sk.lgdx.video.LandLayoutVideo;
 import com.sk.lgdx.video.SampleListener;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -79,18 +70,12 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
     ImageView iv_kecheng_detail_back;
     @BindView(R.id.iv_kecheng_detail_back_pdf)
     ImageView iv_kecheng_detail_back_pdf;
-    @BindView(R.id.tv_kecheng_detail_yeshu)
-    TextView tv_kecheng_detail_yeshu;
-    @BindView(R.id.iv_kecheng_detail_fangda_pdf)
-    ImageView iv_kecheng_detail_fangda_pdf;
     @BindView(R.id.tv_kecheng_detail_bg)
     TextView tv_kecheng_detail_bg;
     @BindView(R.id.tv_kecheng_detail_look)
     MyTextView tv_kecheng_detail_look;
     @BindView(R.id.rl_kecheng_detail_video)
     RelativeLayout rl_kecheng_detail_video;
-    @BindView(R.id.ll_kecheng_detail_title)
-    LinearLayout ll_kecheng_detail_title;
     @BindView(R.id.rl_kecheng_detail_pdf)
     RelativeLayout rl_kecheng_detail_pdf;
     @BindView(R.id.iv_kecheng_detail_pdf)
@@ -111,8 +96,6 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
     LinearLayout ll_kecheng_dianzan;
     @BindView(R.id.tv_kecheng_detail_title)
     TextView tv_kecheng_detail_title;
-    @BindView(R.id.pdf_kecheng_detail)
-    PDFView pdf_kecheng_detail;
 
     private ImageView[] mImageViews;
     List<String> imgIdArray = new ArrayList<>();
@@ -129,7 +112,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
     ArrayList<Fragment> fragList = new ArrayList<>();
     private KeChengEvaluateFragment evaluateFragment;
     private KeChengDetailFragment detailFragment;
-    private String tagId;
+    private String tagId,title;
     private StudyDetailObj studyDetailObj;
 
 
@@ -160,6 +143,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
         ll_kecheng_download.setOnClickListener(new MyOnClickListener() {
             @Override
             protected void onNoDoubleClick(View view) {
+
                 startDownload();
             }
         });
@@ -187,6 +171,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
                 studyDetailObj = obj;
                 tagId = obj.getCourseware_id();
                 tv_kecheng_detail_title.setText(obj.getTitle());
+                title=obj.getTitle();
                 detailFragment.setImg(obj.getKeynote_speaker_image());
                 detailFragment.setName(obj.getKeynote_speaker());
                 detailFragment.setCourseware(obj.getCourseware_introduction());
@@ -236,6 +221,29 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
                 nsv.scrollTo(0, 0);
             }
         });
+        getRxBusEvent(DownLoadSuccessEvent.class, new MySubscriber() {
+            @Override
+            public void onMyNext(Object o) {
+                //courseware_id
+                getDownloadRecord();
+
+
+            }
+        });
+    }
+
+    private void getDownloadRecord() {
+        showLoading();
+        Map<String,String>map=new HashMap<String,String>();
+        map.put("courseware_id",courseware_id);
+        map.put("sign",GetSign.getSign(map));
+        ApiRequest.getDownloadRecord(map, new MyCallBack<BaseObj>(mContext) {
+            @Override
+            public void onSuccess(BaseObj obj) {
+
+            }
+        });
+
     }
 
     private void getMoreEvaluateData() {
@@ -258,11 +266,10 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
         type = getIntent().getStringExtra(Constant.IParam.type);
         image_url = getIntent().getStringExtra(Constant.IParam.image_url);
         Log.d("=========", "==image_url==" + image_url);
-
         courseware_id = getIntent().getStringExtra(Constant.IParam.courseware_id);
         if (type.equals("0")) {
             videoUrl = getIntent().getStringExtra(Constant.IParam.video_pdf);
-            getVideo(videoUrl);
+            getVideo(videoUrl,image_url);
             rl_kecheng_detail_video.setVisibility(View.VISIBLE);
             rl_kecheng_detail_pdf.setVisibility(View.GONE);
 
@@ -270,7 +277,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
             pdfUrl=getIntent().getStringExtra(Constant.IParam.video_pdf);
             rl_kecheng_detail_video.setVisibility(View.GONE);
             rl_kecheng_detail_pdf.setVisibility(View.VISIBLE);
-            showPDF();
+            Glide.with(mContext).load(image_url).error(R.color.c_press).into(iv_kecheng_detail_pdf);
 
 
         }
@@ -348,14 +355,15 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
     }
 
 
-    private void getVideo(String url) {
+    private void getVideo(String url,String imgUrl) {
 
         //断网自动重新链接，url前接上ijkhttphook:
 //        String url = "http://9890.vod.myqcloud.com/9890_4e292f9a3dd011e6b4078980237cc3d3.f20.mp4";
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(R.drawable.banner);
+        Glide.with(mContext).load(imgUrl).error(R.color.c_press).into(imageView);
+//        imageView.setImageResource(R.drawable.banner);
         resolveNormalVideoUI();
         //外部辅助的旋转，帮助全屏
         orientationUtils = new OrientationUtils(this, llv_kechengdetail);
@@ -403,8 +411,6 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
                         super.onQuitFullscreen(url, objects);
                         if (orientationUtils != null) {
                             orientationUtils.backToProtVideo();
-
-
                         }
                     }
                 })
@@ -496,7 +502,6 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
 
     @OnClick({R.id.iv_kecheng_detail_back,
             R.id.iv_kecheng_detail_back_pdf,
-            R.id.iv_kecheng_detail_fangda_pdf,
             R.id.tv_kecheng_detail_look,
             R.id.ll_kecheng_share,
             R.id.ll_kecheng_collection,
@@ -509,16 +514,18 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
             case R.id.iv_kecheng_detail_back_pdf:
                 finish();
                 break;
-            case R.id.iv_kecheng_detail_fangda_pdf:
-                STActivity(KeChengDetailImgActivity.class);
-                break;
             case R.id.tv_kecheng_detail_look:
+                Intent intent=new Intent();
+                intent.putExtra(Constant.IParam.video_pdf,pdfUrl);
+                intent.putExtra(Constant.IParam.title,title);
+//                STActivity(intent,PDFActivity.class);
+                STActivity(intent,PDF2Activity.class);
 
 //                vp_kecheng_detail.setVisibility(View.VISIBLE);
-                pdf_kecheng_detail.setVisibility(View.VISIBLE);
-                iv_kecheng_detail_pdf.setVisibility(View.GONE);
-                tv_kecheng_detail_look.setVisibility(View.GONE);
-                tv_kecheng_detail_bg.setVisibility(View.GONE);
+//                pdf_kecheng_detail.setVisibility(View.VISIBLE);
+//                iv_kecheng_detail_pdf.setVisibility(View.GONE);
+//                tv_kecheng_detail_look.setVisibility(View.GONE);
+//                tv_kecheng_detail_bg.setVisibility(View.GONE);
                 break;
             case R.id.ll_kecheng_share:
 //                Application.
@@ -536,100 +543,6 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
         }
     }
 
-    private void showPDF() {
-
-
-        RXStart(new IOCallBack<InputStream>() {
-            @Override
-            public void call(Subscriber<? super InputStream> subscriber) {
-                try {
-                    Log.i("===","==="+pdfUrl);
-                    URL url = new URL(pdfUrl);
-                    HttpURLConnection connection = (HttpURLConnection)
-                            url.openConnection();
-                    connection.setRequestMethod("GET");//试过POST 可能报错
-                    connection.setDoInput(true);
-                    connection.setConnectTimeout(10000);
-                    connection.setReadTimeout(10000);
-                    //实现连接
-                    connection.connect();
-                    System.out.println("connection.getResponseCode()=" + connection.getResponseCode());
-                    if (connection.getResponseCode() == 200) {
-                        InputStream is = connection.getInputStream();
-                        //这里给过去就行了
-                        Log.i("===","==is="+is);
-                        subscriber.onNext(is);
-                        subscriber.onCompleted();
-
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    Log.i("===","==IOException="+e.getMessage());
-                }
-
-
-            }
-
-            @Override
-            public void onMyNext(InputStream inputStream) {
-                Log.i("===","==inputStream="+inputStream);
-//                showLoading();
-                pdf_kecheng_detail.fromStream( inputStream)
-                        .enableSwipe(true) // allows to block changing pages using swipe
-                        .swipeHorizontal(true)
-                        .enableDoubletap(false)
-                        .defaultPage(1)
-                        // 允许在当前页面上绘制一些内容，通常在屏幕中间可见。
-                .onDraw(new OnDrawListener() {
-                    @Override
-                    public void onLayerDrawn(Canvas canvas, float pageWidth, float pageHeight, int displayedPage) {
-
-                    }
-                })
-                        // 允许在每一页上单独绘制一个页面。只调用可见页面
-                .onLoad(new OnLoadCompleteListener() {
-                    @Override
-                    public void loadComplete(int nbPages) {
-
-                    }
-                }) // 加载文档并开始呈现后调用。
-                .onPageChange(new OnPageChangeListener() {
-                    @Override
-                    public void onPageChanged(int page, int pageCount) {
-
-                    }
-                })
-                .onPageScroll(new OnPageScrollListener() {
-                    @Override
-                    public void onPageScrolled(int page, float positionOffset) {
-
-                    }
-                })
-                .onError(new OnErrorListener() {
-                    @Override
-                    public void onError(Throwable t) {
-                        Log.i("===","==onError="+t.getMessage());
-
-                    }
-                })
-
-
-                .enableAnnotationRendering(false) // render注释（such as comments，颜色或形式）
-                .password(null)
-                .scrollHandle(null)
-                        .load();
-
-
-            }
-
-
-        });
-
-
-
-
-
-    }
 
     private void startDownload() {
         if (TextUtils.isEmpty(videoUrl)) {
@@ -707,7 +620,6 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
     @Override
     public void onPageSelected(int position) {
         int indext = position + 1;
-        tv_kecheng_detail_yeshu.setText(indext + "/" + imgIdArray.size() + "页");
 
 
     }

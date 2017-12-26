@@ -53,6 +53,12 @@ public class ApiRequest extends BaseApiRequest {
         getGeneralClient(IRequest.class).getAddCommentCourseWare(map).enqueue(callBack);
     }
 
+    //增加下载记录(下载完成后调取)
+    public static void getDownloadRecord(Map map,MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) { callBack.onFailure(null, new NoNetworkException(Config.noNetWork)); return; }
+        getGeneralClient(IRequest.class).getDownloadRecord(map).enqueue(callBack);
+    }
+
 
     /***************************************分割线***********************************************/
     public static void getNearShangJiaType(Map map,MyCallBack callBack) {

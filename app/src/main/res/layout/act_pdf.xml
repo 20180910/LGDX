@@ -7,9 +7,9 @@
               android:background="@color/background_f2"
               android:id="@+id/ll"
     >
-    <com.lidong.pdf.PDFView
-        android:id="@+id/pdfView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+    <!--<com.lidong.pdf.PDFView-->
+        <!--android:id="@+id/pdfView"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--/>-->
 </LinearLayout>

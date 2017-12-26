@@ -260,19 +260,23 @@ public class QuerentijiaoActivity extends BaseActivity {
         Map<String,String>map=new HashMap<String,String>();
         map.put("user_id",getUserId());
         map.put("operation_id",operation_id);
-        map.put("content",content);
+//        map.put("content",content);
         map.put("sign",GetSign.getSign(map));
 
+        QuerentijiaoBody beanBody=new QuerentijiaoBody();
+        beanBody.setContent(content);
 
-        List< QuerentijiaoBody> imgBean=new ArrayList<>();
+        List< QuerentijiaoBody.ImageBean> imgBean=new ArrayList<>();
         if(notEmpty(addImgAdapter.getList())){
             for (int i = 0; i < addImgAdapter.getList().size(); i++) {
-                QuerentijiaoBody body=new QuerentijiaoBody();
+                QuerentijiaoBody.ImageBean body=new QuerentijiaoBody.ImageBean();
                 body.setImages((String)addImgAdapter.getList().get(i));
                 imgBean.add(body);
             }
         }
-        com.sk.lgdx.module.home.network.ApiRequest.postOperationSubmit(map, imgBean, new MyCallBack<BaseObj>(mContext) {
+        beanBody.setImage(imgBean);
+
+        com.sk.lgdx.module.home.network.ApiRequest.postOperationSubmit(map, beanBody, new MyCallBack<BaseObj>(mContext) {
             @Override
             public void onSuccess(BaseObj obj) {
                 showMsg(obj.getMsg());

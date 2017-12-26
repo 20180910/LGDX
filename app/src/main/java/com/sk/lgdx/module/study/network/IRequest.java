@@ -59,6 +59,10 @@ public interface IRequest {
     @GET("api/SHLGInformation/GetAddCommentCourseWare")
     Call<ResponseObj<BaseObj>> getAddCommentCourseWare(@QueryMap Map<String, String> map);
 
+   // 增加下载记录(下载完成后调取)
+    @GET("api/SHLGInformation/GetDownloadRecord")
+    Call<ResponseObj<BaseObj>> getDownloadRecord(@QueryMap Map<String, String> map);
+
     /*************************************分割线*********************************************************/
 
     //商家列表类别

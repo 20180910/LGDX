@@ -78,7 +78,7 @@ public interface IRequest {
 
     //提交作业
     @POST("api/SHLGStudent/PostOperationSubmit")
-    Call<ResponseObj<BaseObj>> postOperationSubmit(@QueryMap Map<String, String> map,@Body List<QuerentijiaoBody> body );
+    Call<ResponseObj<BaseObj>> postOperationSubmit(@QueryMap Map<String, String> map,@Body QuerentijiaoBody body );
 
 
 

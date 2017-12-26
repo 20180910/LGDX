@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest package="com.sk.lgdx"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -40,7 +41,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:name=".MyApplication"
-        android:theme="@style/AppTheme.NoActionBar">
+        android:theme="@style/AppTheme.NoActionBar"
+        >
         <activity android:name=".module.my.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -80,6 +82,8 @@
         <activity android:name=".module.my.activity.EditPhoneActivity"/>
         <activity android:name=".module.home.activity.QuerentijiaoActivity"
                   android:windowSoftInputMode="stateHidden"/>
+        <!--<activity android:name=".module.study.activity.PDFActivity"/>-->
+        <activity android:name=".module.study.activity.PDF2Activity"/>
 
 
         <service android:name=".tools.download.service.DownloadService"/>

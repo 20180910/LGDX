@@ -15,9 +15,11 @@ import com.aspsine.multithreaddownload.DownloadException;
 import com.aspsine.multithreaddownload.DownloadManager;
 import com.aspsine.multithreaddownload.DownloadRequest;
 import com.aspsine.multithreaddownload.util.L;
+import com.github.baseclass.rx.RxBus;
 import com.sk.lgdx.Constant;
 import com.sk.lgdx.R;
 import com.sk.lgdx.database.DBHelper;
+import com.sk.lgdx.module.home.event.DownLoadSuccessEvent;
 import com.sk.lgdx.tools.download.entity.AppInfo;
 import com.sk.lgdx.tools.download.util.FileUtils;
 import com.sk.lgdx.tools.download.util.Utils;
@@ -244,6 +246,16 @@ public class DownloadService extends Service {
             mAppInfo.setProgress(100);
             DBHelper.newInstance(mContext).insert(mAppInfo);
             sendBroadCast(mAppInfo);
+            RxBus.getInstance().post(new DownLoadSuccessEvent());
+
+
+
+
+
+
+
+
+
         }
 
         @Override

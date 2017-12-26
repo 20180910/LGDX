@@ -102,5 +102,5 @@ dependencies {
     compile 'cn.yipianfengye.android:zxing-library:2.2'
 
 
-    compile 'com.lidong.pdf:android_pdf:1.0.1'
+//    compile 'com.lidong.pdf:android_pdf:1.0.1'
 }

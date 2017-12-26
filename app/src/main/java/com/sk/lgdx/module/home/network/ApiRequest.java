@@ -8,7 +8,6 @@ import com.sk.lgdx.module.home.network.request.HomeTypeMerchantListBody;
 import com.sk.lgdx.module.home.network.request.QuerentijiaoBody;
 import com.sk.lgdx.module.home.network.request.SearchResultBody;
 
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -101,7 +100,7 @@ public class ApiRequest extends BaseApiRequest {
     }
 
     //提交作业
-    public static void postOperationSubmit(Map map, List<QuerentijiaoBody> body, MyCallBack callBack) {
+    public static void postOperationSubmit(Map map,QuerentijiaoBody body, MyCallBack callBack) {
         if (notNetWork(callBack.getContext())) {
             callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
             return;
