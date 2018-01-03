@@ -60,6 +60,34 @@ public class ApiRequest extends BaseApiRequest {
     }
 
 
+
+    //热门搜索词、历史搜索词
+    public static void getHottestSearch(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getHottestSearch(map).enqueue(callBack);
+    }
+
+    //删除历史搜索词
+    public static void getDelRecentlySearch(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getDelRecentlySearch(map).enqueue(callBack);
+    }
+    //删除历史搜索词
+    public static void getSearchCourseWare(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getSearchCourseWare(map).enqueue(callBack);
+    }
+
+
     /***************************************分割线***********************************************/
     public static void getNearShangJiaType(Map map,MyCallBack callBack) {
         if (notNetWork(callBack.getContext())) { callBack.onFailure(null, new NoNetworkException(Config.noNetWork)); return; }

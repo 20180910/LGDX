@@ -93,6 +93,7 @@ public class MoreReplyActivity extends BaseActivity {
                         //弹出软键盘
                         InputMethodManager mInput= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         mInput.toggleSoftInput(0,InputMethodManager.SHOW_FORCED);
+                        et_more_reply_discuss.requestFocus();//获取焦点
                         et_more_reply_discuss.setHint("请回复"+bean.getName());
                         tv_more_reply_pinglun.setText("回复");
 
@@ -175,6 +176,7 @@ public class MoreReplyActivity extends BaseActivity {
                 //弹出软键盘
                 InputMethodManager mInput= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                 mInput.toggleSoftInput(0,InputMethodManager.SHOW_FORCED);
+                et_more_reply_discuss.requestFocus();//获取焦点
                 et_more_reply_discuss.setHint("请输入你对"+name+"的评论");
                 tv_more_reply_pinglun.setText("评论");
             break;

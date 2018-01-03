@@ -80,6 +80,7 @@ public abstract class BaseFragment extends IBaseFragment implements View.OnClick
             pcfl.setPtrHandler(new PtrDefaultHandler() {
                 @Override
                 public void onRefreshBegin(PtrFrameLayout frame) {
+                    getOtherData();
                     getData(1,false);
                 }
                 @Override
@@ -103,6 +104,10 @@ public abstract class BaseFragment extends IBaseFragment implements View.OnClick
         initRxBus();
         isPrepared=true;
         setUserVisibleHint(true);
+    }
+
+    protected void getOtherData() {
+
     }
 
     @Override

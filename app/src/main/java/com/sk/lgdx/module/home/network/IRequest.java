@@ -4,7 +4,6 @@ import com.sk.lgdx.base.BaseObj;
 import com.sk.lgdx.base.ResponseObj;
 import com.sk.lgdx.module.home.network.request.HomeTypeMerchantListBody;
 import com.sk.lgdx.module.home.network.request.QuerentijiaoBody;
-import com.sk.lgdx.module.home.network.request.SearchResultBody;
 import com.sk.lgdx.module.home.network.response.AreaBusinessCircleObj;
 import com.sk.lgdx.module.home.network.response.CityIdObj;
 import com.sk.lgdx.module.home.network.response.HomeAnnouncementObj;
@@ -16,10 +15,11 @@ import com.sk.lgdx.module.home.network.response.HomeTypeAssemblageObj;
 import com.sk.lgdx.module.home.network.response.HomeTypeMerchantListObj;
 import com.sk.lgdx.module.home.network.response.InformationListObj;
 import com.sk.lgdx.module.home.network.response.InformationMoreObj;
+import com.sk.lgdx.module.home.network.response.KaoqinObj;
+import com.sk.lgdx.module.home.network.response.KechengbiaoObj;
 import com.sk.lgdx.module.home.network.response.NewListObj;
 import com.sk.lgdx.module.home.network.response.NewsDetailObj;
-import com.sk.lgdx.module.home.network.response.SearchObj;
-import com.sk.lgdx.module.home.network.response.SearchResultObj;
+import com.sk.lgdx.module.home.network.response.NextLessonObj;
 import com.sk.lgdx.module.home.network.response.StudentOperationListObj;
 import com.sk.lgdx.module.home.network.response.TypeAssemBlageObj;
 import com.sk.lgdx.module.home.network.response.UnreadNewsObj;
@@ -74,11 +74,26 @@ public interface IRequest {
     //作业列表
     @GET ("api/SHLGStudent/GetStudentOperationList")
     Call<ResponseObj<List<StudentOperationListObj>>> getStudentOperationList(@QueryMap Map<String, String> map);
-
-
     //提交作业
     @POST("api/SHLGStudent/PostOperationSubmit")
     Call<ResponseObj<BaseObj>> postOperationSubmit(@QueryMap Map<String, String> map,@Body QuerentijiaoBody body );
+
+
+    //课程表
+    @GET ("api/SHLGInformation/GetCurriculumSchedule")
+    Call<ResponseObj<List<KechengbiaoObj>>> getCurriculumSchedule(@QueryMap Map<String, String> map);
+
+    //考勤
+    @GET ("api/SHLGStudent/GetAttendanceStudent")
+    Call<ResponseObj<List<KaoqinObj>>> getKaoqin(@QueryMap Map<String, String> map);
+
+    //扫码签到
+    @GET ("api/SHLGStudent/GetSignIn")
+    Call<ResponseObj<BaseObj>> getSignIn(@QueryMap Map<String, String> map);
+
+    //下一节课
+    @GET ("api/SHLGStudent/GetNextLesson")
+    Call<ResponseObj<NextLessonObj>> getNextLesson(@QueryMap Map<String, String> map);
 
 
 
@@ -115,17 +130,7 @@ public interface IRequest {
 
 
 
-    //热门搜索词、历史搜索词
-    @GET("api/MerchantCenter/GetHottestSearch")
-    Call<ResponseObj<SearchObj>> getHottestSearch(@QueryMap Map<String, String> map);
 
-    //删除历史搜索词
-    @GET("api/MerchantCenter/GetDelRecentlySearch")
-    Call<ResponseObj<BaseObj>> getDelRecentlySearch(@QueryMap Map<String, String> map);
-
-    //搜索商家
-    @POST("api/MerchantCenter/PostSearchMerchant")
-    Call<ResponseObj<SearchResultObj>>postSearchMerchant(@QueryMap Map<String, String> map, @Body SearchResultBody body);
 
     //猜你喜欢
     @GET("api/Information/GetGuessYouLike")

@@ -65,7 +65,7 @@
                                 android:layout_height="30dp"
                                 android:scaleType="centerCrop"
                                 android:src="@drawable/my_people"
-                                app:my_iv_radius="10dp"
+                                app:my_iv_radius="15dp"
                                 />
 
                             <LinearLayout

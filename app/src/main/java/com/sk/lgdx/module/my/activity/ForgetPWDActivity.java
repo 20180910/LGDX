@@ -39,7 +39,7 @@ public class ForgetPWDActivity extends BaseActivity {
     TextView tv_forget_pwd_get_cord;
     @BindView(R.id.tv_forget_pwd_next)
     MyTextView tv_forget_pwd_next;
-    String email,smsCode;
+    String email,smsCode,getCode;
 
     @Override
     protected int getContentView() {
@@ -76,6 +76,26 @@ public class ForgetPWDActivity extends BaseActivity {
                 getMsgCode();
                 break;
             case R.id.tv_forget_pwd_next:
+                email=getSStr(et_forget_pwd_get_youxiang);
+                getCode=getSStr(et_forget_pwd_get_yanzhengma);
+
+                if (TextUtils.isEmpty(email)) {
+                    showMsg("请输入邮箱！");
+                    return;
+                }
+                if(!GetSign.isEmail(email)){
+                    showMsg("请输入正确邮箱!");
+                    return;
+                }
+                if (TextUtils.isEmpty(getCode)) {
+                    showMsg("请输入邮箱验证码");
+                    return;
+                }
+                if (!getCode.equals(smsCode)) {
+                    showMsg("请输入正确的邮箱验证码");
+                    return;
+                }
+
 
                 Intent intent=new Intent();
                 intent.putExtra(Constant.IParam.mailbox,email);

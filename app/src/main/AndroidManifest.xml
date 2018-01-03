@@ -84,6 +84,8 @@
                   android:windowSoftInputMode="stateHidden"/>
         <!--<activity android:name=".module.study.activity.PDFActivity"/>-->
         <activity android:name=".module.study.activity.PDF2Activity"/>
+        <activity android:name=".module.study.activity.SearchActivity" android:windowSoftInputMode="stateHidden"/>
+        <activity android:name=".module.study.activity.SearchResultActivity"/>
 
 
         <service android:name=".tools.download.service.DownloadService"/>

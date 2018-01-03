@@ -33,7 +33,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
             android:imeOptions="actionNext"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:hint="输入邮箱"
 
             />

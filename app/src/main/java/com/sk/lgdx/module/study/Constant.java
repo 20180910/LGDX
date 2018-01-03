@@ -24,7 +24,7 @@ public class Constant {
     public static final int tomorrow=2;
     public static final int houTian=3;
     public static class IParam{
-
+        public static final String searchTerm="search_term";
         public static final String jiaCai="jiaCai";
         public static final String course_type_id="course_type_id";
         public static final String video_pdf="video_pdf";

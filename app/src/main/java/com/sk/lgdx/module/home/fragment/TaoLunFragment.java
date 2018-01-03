@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.androidtools.PhoneUtils;
+import com.github.androidtools.inter.MyOnClickListener;
 import com.github.baseclass.adapter.LoadMoreAdapter;
 import com.github.baseclass.adapter.LoadMoreViewHolder;
 import com.sk.lgdx.GetSign;
@@ -105,14 +106,14 @@ public class TaoLunFragment extends BaseFragment {
                 rv_item_taolun_img.setAdapter(imgAdapter);
 
 
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent();
-                        intent.putExtra(Constant.IParam.discussion_forum_id,bean.getDiscussion_forum_id());
-                        STActivity(intent,TaolunDetailsActivity.class);
-                    }
-                });
+              holder.itemView.setOnClickListener(new MyOnClickListener() {
+                  @Override
+                  protected void onNoDoubleClick(View view) {
+                      Intent intent=new Intent();
+                      intent.putExtra(Constant.IParam.discussion_forum_id,bean.getDiscussion_forum_id());
+                      STActivity(intent,TaolunDetailsActivity.class);
+                  }
+              });
 
             }
         };

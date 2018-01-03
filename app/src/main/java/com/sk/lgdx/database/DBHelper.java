@@ -56,7 +56,7 @@ public class DBHelper extends SQLiteOpenHelper {
         /*if(hasMoreData(info.getTitle())){
             return;
         }*/
-        deleteSameData(info.getTitle());
+        deleteSameData(info.getId());
         Log.i(TAG+"===","======"+info.getImage()+"==="+info.getFileSize());
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL("insert into "
@@ -64,9 +64,9 @@ public class DBHelper extends SQLiteOpenHelper {
                         + "(id, fileName, title, image,url, houZhui, fileSize,creattime) values(?, ?, ?, ?, ?, ?,?,?)",
                 new Object[]{info.getId(), info.getFileName()+"."+info.getHouZhui(), info.getTitle(),info.getImage(), info.getUrl(), info.getHouZhui(), info.getFileSize(),dateToString()});
     }
-    public void deleteSameData(String title){
+    public void deleteSameData(String id){
         SQLiteDatabase db = getWritableDatabase();
-         db.delete(TABLE_NAME, "title=?", new String[]{title});
+         db.delete(TABLE_NAME, "id=?", new String[]{id});
     }
     public boolean hasMoreData(String title){
         SQLiteDatabase db = getWritableDatabase();

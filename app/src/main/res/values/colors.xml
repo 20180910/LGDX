@@ -3,6 +3,7 @@
     <color name="gray_f6">#f6f6f6</color>
     <color name="gray_33">#333333</color>
     <color name="gray_66">#666666</color>
+    <color name="gray_f3">#F3F4F5</color>
     <color name="gray_99">#999999</color>
     <color name="gray_ea">#eaeaea</color>
     <color name="gray_d7">#d7d7d7</color>
@@ -25,6 +26,13 @@
     <color name="orange_press">#eaa304</color>
     <color name="blue">#4ed3fd</color>
     <color name="red">#fc353a</color>
+    <color name="hongse">#ff0000</color>
+    <color name="chengse">#ff7f00</color>
+    <color name="huangse">#d9d919</color>
+    <color name="lvse">#00ff00</color>
+    <color name="qingse">#00ffff</color>
+    <color name="lanse">#0000ff</color>
+    <color name="zise">#800080</color>
     <color name="gray_press">#FFE4E0E0</color>
     <color name="blue_press">#FF15C0F5</color>
     <color name="black_33">#333333</color>

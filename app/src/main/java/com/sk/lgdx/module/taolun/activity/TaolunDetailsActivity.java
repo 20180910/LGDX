@@ -227,6 +227,7 @@ public class TaolunDetailsActivity extends BaseActivity {
                         //弹出软键盘
                         InputMethodManager mInput= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         mInput.toggleSoftInput(0,InputMethodManager.SHOW_FORCED);
+                        et_taolun_details_discuss.requestFocus();//获取焦点
                         et_taolun_details_discuss.setHint("请输入你对"+bean.getName()+"的评论");
                     }
                 });

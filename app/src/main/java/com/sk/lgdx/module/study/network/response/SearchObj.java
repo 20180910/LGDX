@@ -1,4 +1,5 @@
-package com.sk.lgdx.module.home.network.response;
+package com.sk.lgdx.module.study.network.response;
+
 
 import com.sk.lgdx.base.BaseObj;
 
@@ -9,6 +10,7 @@ import java.util.List;
  */
 
 public class SearchObj extends BaseObj {
+
 
     private List<RecentlyListBean> recently_list;
     private List<HottestListBean> hottest_list;
@@ -31,7 +33,7 @@ public class SearchObj extends BaseObj {
 
     public static class RecentlyListBean {
         /**
-         * search_term : 黄焖鸡米饭
+         * search_term : 葵花
          */
 
         private String search_term;
@@ -47,7 +49,7 @@ public class SearchObj extends BaseObj {
 
     public static class HottestListBean {
         /**
-         * search_term : 黄焖鸡
+         * search_term : 葵花
          */
 
         private String search_term;

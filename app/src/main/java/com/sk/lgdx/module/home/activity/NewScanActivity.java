@@ -2,17 +2,25 @@ package com.sk.lgdx.module.home.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 
 import com.github.androidtools.StatusBarUtils;
+import com.github.baseclass.rx.RxBus;
+import com.sk.lgdx.GetSign;
 import com.sk.lgdx.R;
 import com.sk.lgdx.base.BaseActivity;
+import com.sk.lgdx.base.BaseObj;
+import com.sk.lgdx.base.MyCallBack;
+import com.sk.lgdx.module.home.event.SaomaEvent;
+import com.sk.lgdx.module.home.network.ApiRequest;
 import com.uuzuche.lib_zxing.activity.CaptureFragment;
 import com.uuzuche.lib_zxing.activity.CodeUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -39,35 +47,25 @@ public class NewScanActivity extends BaseActivity {
             @Override
             public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
                 Log.i("===","==="+result);
-                Message restartMessage = new Message();
-                restartMessage.what = com.uuzuche.lib_zxing.R.id.restart_preview;
-                captureFragment.getHandler().sendMessageDelayed(restartMessage, 5000);
-               Intent resultIntent = new Intent();
-                Bundle bundle = new Bundle();
-                bundle.putInt(CodeUtils.RESULT_TYPE, CodeUtils.RESULT_SUCCESS);
-                bundle.putString(CodeUtils.RESULT_STRING, result);
-                resultIntent.putExtras(bundle);
-                setResult(RESULT_OK, resultIntent);
-                finish();
-//                Map<String,String> map=new HashMap<String,String>();
-//                map.put("bar_code",result);
-//                map.put("sign", GetSign.getSign(map));
-//                ApiRequest.getGoodsIdForScabCode(map, new MyCallBack<GoodsIdObj>(mContext) {
-//                    @Override
-//                    public void onSuccess(GoodsIdObj obj) {
-//                        Intent intent=new Intent();
-//                        intent.putExtra(Constant.IParam.goodsId,obj.getGoods_id());
-//                        STActivity(intent,GoodsDetailActivity.class);
-//                        finish();
-//                    }
-//                    @Override
-//                    public void onError(Throwable e) {
-//                        super.onError(e);
-//                        Message restartMessage = new Message();
-//                        restartMessage.what = com.uuzuche.lib_zxing.R.id.restart_preview;
-//                        captureFragment.getHandler().sendMessageDelayed(restartMessage, 5000);
-//                    }
-//                });
+                Map<String,String> map=new HashMap<String,String>();
+                map.put("user_id",getUserId());
+                map.put("code",result);
+                map.put("sign", GetSign.getSign(map));
+                ApiRequest.getSignIn(map, new MyCallBack<BaseObj>(mContext) {
+                    @Override
+                    public void onSuccess(BaseObj obj) {
+                        RxBus.getInstance().post(new SaomaEvent());
+
+                        finish();
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        Message restartMessage = new Message();
+                        restartMessage.what = com.uuzuche.lib_zxing.R.id.restart_preview;
+                        captureFragment.getHandler().sendMessageDelayed(restartMessage, 5000);
+                    }
+                });
             }
 
             @Override

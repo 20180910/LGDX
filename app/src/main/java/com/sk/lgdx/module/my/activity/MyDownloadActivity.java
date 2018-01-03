@@ -105,7 +105,7 @@ public class MyDownloadActivity extends BaseActivity {
                     @Override
                     protected void onNoDoubleClick(View view) {
                         if (!isEdit) {
-                            String path = FileUtils.getDownloadDir() + "/" + bean.getFileName();
+                            String path = FileUtils.getDownloadDir() + "/"+ bean.getFileName();
                             IntentUtils.openFileIntent(mContext, path);
 
                         }

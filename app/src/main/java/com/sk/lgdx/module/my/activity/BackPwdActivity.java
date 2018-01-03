@@ -74,6 +74,13 @@ public class BackPwdActivity extends BaseActivity {
                     return;
                 }
 
+                if (newPassword.length()<6||newPassword.length()>12) {
+                    showMsg("密码长度为6至12位");
+                    return;
+
+                }
+
+
                 if(!newPassword.equals(newPassword2)){
                     showMsg("两次密码不一样");
                     return;

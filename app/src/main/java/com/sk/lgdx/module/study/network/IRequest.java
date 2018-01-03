@@ -3,7 +3,6 @@ package com.sk.lgdx.module.study.network;
 import com.sk.lgdx.base.BaseBody;
 import com.sk.lgdx.base.BaseObj;
 import com.sk.lgdx.base.ResponseObj;
-import com.sk.lgdx.module.study.network.response.StudyDetailObj;
 import com.sk.lgdx.module.study.network.request.CommitOrderBody;
 import com.sk.lgdx.module.study.network.request.NearShangJiaBody;
 import com.sk.lgdx.module.study.network.request.ShowOrderBody;
@@ -14,11 +13,14 @@ import com.sk.lgdx.module.study.network.response.MajorTypeObj;
 import com.sk.lgdx.module.study.network.response.NearListObj;
 import com.sk.lgdx.module.study.network.response.NearShangJiaObj;
 import com.sk.lgdx.module.study.network.response.PaySuccessObj;
+import com.sk.lgdx.module.study.network.response.SearchObj;
+import com.sk.lgdx.module.study.network.response.SearchResultObj;
 import com.sk.lgdx.module.study.network.response.ShangJiaEvaluateListObj;
 import com.sk.lgdx.module.study.network.response.ShangJiaEvaluateNumObj;
 import com.sk.lgdx.module.study.network.response.ShangJiaInfoObj;
 import com.sk.lgdx.module.study.network.response.ShangJiaObj;
 import com.sk.lgdx.module.study.network.response.ShangJiaShangPingObj;
+import com.sk.lgdx.module.study.network.response.StudyDetailObj;
 import com.sk.lgdx.module.study.network.response.TiJiaoOrderObj;
 import com.sk.lgdx.module.study.network.response.YuYueTimeObj;
 
@@ -63,7 +65,22 @@ public interface IRequest {
     @GET("api/SHLGInformation/GetDownloadRecord")
     Call<ResponseObj<BaseObj>> getDownloadRecord(@QueryMap Map<String, String> map);
 
-    /*************************************分割线*********************************************************/
+
+
+ //热门搜索词、历史搜索词
+ @GET("api/SHLGInformation/GetHottestSearch")
+ Call<ResponseObj<SearchObj>> getHottestSearch(@QueryMap Map<String, String> map);
+
+ //删除历史搜索词
+ @GET("api/SHLGInformation/GetDelRecentlySearch")
+ Call<ResponseObj<BaseObj>> getDelRecentlySearch(@QueryMap Map<String, String> map);
+
+ //删除历史搜索词
+ @GET("api/SHLGInformation/GetSearchCourseWare")
+ Call<ResponseObj<SearchResultObj>> getSearchCourseWare(@QueryMap Map<String, String> map);
+
+
+ /*************************************分割线*********************************************************/
 
     //商家列表类别
     @GET("api/Information/GetTypeAssemblage")

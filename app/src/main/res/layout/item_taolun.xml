@@ -20,7 +20,7 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:scaleType="centerCrop"
-            app:my_iv_radius="10dp"
+            app:my_iv_radius="15dp"
             android:src="@drawable/my_people"
             />
         <TextView

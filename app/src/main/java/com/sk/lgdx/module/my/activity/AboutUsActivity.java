@@ -49,17 +49,23 @@ public class AboutUsActivity extends BaseActivity {
 
     @Override
     protected void initData() {
-        getAboutPlatform();
+       showProgress();
+        getData(1,false);
 
 
     }
 
+    @Override
+    protected void getData(int page, boolean isLoad) {
+        super.getData(page, isLoad);
+        getAboutPlatform();
+    }
+
     private void getAboutPlatform() {
-        showLoading();
         Map<String, String> map = new HashMap<String, String>();
         map.put("rnd", getRnd());
         map.put("sign", GetSign.getSign(map));
-        ApiRequest.getAboutPlatform(map, new MyCallBack<AboutPlatformObj>(mContext) {
+        ApiRequest.getAboutPlatform(map, new MyCallBack<AboutPlatformObj>(mContext,pcfl,pl_load) {
             @Override
             public void onSuccess(AboutPlatformObj obj) {
                 logo=obj.getLogo();

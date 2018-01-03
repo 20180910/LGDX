@@ -6,7 +6,6 @@ import com.sk.lgdx.base.BaseApiRequest;
 import com.sk.lgdx.base.MyCallBack;
 import com.sk.lgdx.module.home.network.request.HomeTypeMerchantListBody;
 import com.sk.lgdx.module.home.network.request.QuerentijiaoBody;
-import com.sk.lgdx.module.home.network.request.SearchResultBody;
 
 import java.util.Map;
 
@@ -98,7 +97,6 @@ public class ApiRequest extends BaseApiRequest {
         }
         getGeneralClient(IRequest.class).getStudentOperationList(map).enqueue(callBack);
     }
-
     //提交作业
     public static void postOperationSubmit(Map map,QuerentijiaoBody body, MyCallBack callBack) {
         if (notNetWork(callBack.getContext())) {
@@ -106,6 +104,42 @@ public class ApiRequest extends BaseApiRequest {
             return;
         }
         getGeneralClient(IRequest.class).postOperationSubmit(map, body).enqueue(callBack);
+    }
+
+    //课程表
+    public static void getCurriculumSchedule(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getCurriculumSchedule(map).enqueue(callBack);
+    }
+
+    //考勤
+    public static void getKaoqin(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getKaoqin(map).enqueue(callBack);
+    }
+
+    //扫码签到
+    public static void getSignIn(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getSignIn(map).enqueue(callBack);
+    }
+
+    //下一节课
+    public static void getNextLesson(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getNextLesson(map).enqueue(callBack);
     }
 
 
@@ -175,31 +209,8 @@ public class ApiRequest extends BaseApiRequest {
 
 
 
-    //热门搜索词、历史搜索词
-    public static void getHottestSearch(Map map, MyCallBack callBack) {
-        if (notNetWork(callBack.getContext())) {
-            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
-            return;
-        }
-        getGeneralClient(IRequest.class).getHottestSearch(map).enqueue(callBack);
-    }
 
-    //删除历史搜索词
-    public static void getDelRecentlySearch(Map map, MyCallBack callBack) {
-        if (notNetWork(callBack.getContext())) {
-            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
-            return;
-        }
-        getGeneralClient(IRequest.class).getDelRecentlySearch(map).enqueue(callBack);
-    }
-    //搜索商家
-    public static void postSearchMerchant(Map map, SearchResultBody body, MyCallBack callBack) {
-        if (notNetWork(callBack.getContext())) {
-            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
-            return;
-        }
-        getGeneralClient(IRequest.class).postSearchMerchant(map,body).enqueue(callBack);
-    }
+
 
     //猜你喜欢
     public static void getGuessYouLike(Map map, MyCallBack callBack) {

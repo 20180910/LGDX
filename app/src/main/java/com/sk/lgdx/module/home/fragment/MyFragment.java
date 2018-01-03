@@ -1,6 +1,5 @@
 package com.sk.lgdx.module.home.fragment;
 
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -84,11 +83,8 @@ public class MyFragment extends BaseFragment {
         ApiRequest.getUserInfo(map, new MyCallBack<UserInfoObj>(mContext, pcfl, pl_load) {
             @Override
             public void onSuccess(UserInfoObj obj) {
-                if (TextUtils.isEmpty(obj.getAvatar())) {
-                    iv_my_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.my_people));
-                } else {
-                    Glide.with(mContext).load(obj.getAvatar()).error(R.color.c_press).into(iv_my_icon);
-                }
+                    Glide.with(mContext).load(obj.getAvatar()).error(R.drawable.my_people).into(iv_my_icon);
+                SPUtils.setPrefString(mContext,Config.avatar,obj.getAvatar());
                 tv_my_name.setText(obj.getName());
                 tv_my_xuehao.setText("学号：" + obj.getUser_name());
 

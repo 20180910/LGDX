@@ -39,6 +39,7 @@ import com.sk.lgdx.module.home.event.StudyEvent;
 import com.sk.lgdx.module.home.network.ApiRequest;
 import com.sk.lgdx.module.home.network.response.HomeRoastingChartObj;
 import com.sk.lgdx.module.home.network.response.InformationListObj;
+import com.sk.lgdx.module.home.network.response.NextLessonObj;
 import com.sk.lgdx.module.home.network.response.TypeAssemBlageObj;
 import com.sk.lgdx.module.home.network.response.UnreadNewsObj;
 import com.sk.lgdx.tools.GlideLoader;
@@ -52,6 +53,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import butterknife.Unbinder;
 
 import static com.github.baseclass.rx.RxBusHelper.getRxBusEvent;
 
@@ -86,8 +88,13 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.rv_home_type)
     RecyclerView rv_home_type;
     BaseRecyclerAdapter typeAdapter;
+    @BindView(R.id.tv_home_kecheng_name)
+    TextView tv_home_kecheng_name;
+    @BindView(R.id.tv_home_kecheng_time)
+    TextView tv_home_kecheng_time;
+    Unbinder unbinder;
     private List<String> bannerList;
-    String news_num="0",homework_num="0";
+    String news_num = "0", homework_num = "0";
     ;
 
     @Override
@@ -100,59 +107,58 @@ public class HomeFragment extends BaseFragment {
         rv_home_xueyuan.setFocusable(false);
 
 
-       typeAdapter=new BaseRecyclerAdapter<TypeAssemBlageObj>(mContext,R.layout.item_home_type) {
-           @Override
-           public void bindData(RecyclerViewHolder holder, int i, TypeAssemBlageObj obj) {
-               ImageView iv_item_home_type_icon = holder.getImageView(R.id.iv_item_home_type_icon);
-               TextView tv_item_home_type_name = holder.getTextView(R.id.tv_item_home_type_name);
-               TextView tv_item_home_type_num = holder.getTextView(R.id.tv_item_home_type_num);
-               Glide.with(mContext).load(obj.getImg_url()).error(R.color.c_press).into(iv_item_home_type_icon);
-               tv_item_home_type_name.setText(obj.getTitle());
-               if (i==3) {
-                   if (homework_num.equals("0")) {
-                       tv_item_home_type_num.setVisibility(View.GONE);
-                   }else {
-                       tv_item_home_type_num.setVisibility(View.VISIBLE);
-                       tv_item_home_type_num.setText(homework_num);
-                   }
+        typeAdapter = new BaseRecyclerAdapter<TypeAssemBlageObj>(mContext, R.layout.item_home_type) {
+            @Override
+            public void bindData(RecyclerViewHolder holder, int i, TypeAssemBlageObj obj) {
+                ImageView iv_item_home_type_icon = holder.getImageView(R.id.iv_item_home_type_icon);
+                TextView tv_item_home_type_name = holder.getTextView(R.id.tv_item_home_type_name);
+                TextView tv_item_home_type_num = holder.getTextView(R.id.tv_item_home_type_num);
+                Glide.with(mContext).load(obj.getImg_url()).error(R.color.c_press).into(iv_item_home_type_icon);
+                tv_item_home_type_name.setText(obj.getTitle());
+                if (i == 3) {
+                    if (homework_num.equals("0")) {
+                        tv_item_home_type_num.setVisibility(View.GONE);
+                    } else {
+                        tv_item_home_type_num.setVisibility(View.VISIBLE);
+                        tv_item_home_type_num.setText(homework_num);
+                    }
 
-               }else {
-                   tv_item_home_type_num.setVisibility(View.GONE);
-               }
-               holder.itemView.setOnClickListener(new MyOnClickListener() {
-                   @Override
-                   protected void onNoDoubleClick(View view) {
-                       switch (i){
-                           case 0:
-                               RxBus.getInstance().post(new StudyEvent(Config.study));
-                           break;
-                           case 1:
-                               STActivity(KechengbiaoActivity.class);
-                           break;
-                           case 2:
-                               STActivity(KaoqinActivity.class);
-                           break;
+                } else {
+                    tv_item_home_type_num.setVisibility(View.GONE);
+                }
+                holder.itemView.setOnClickListener(new MyOnClickListener() {
+                    @Override
+                    protected void onNoDoubleClick(View view) {
+                        switch (i) {
+                            case 0:
+                                RxBus.getInstance().post(new StudyEvent(Config.study));
+                                break;
+                            case 1:
+                                STActivity(KechengbiaoActivity.class);
+                                break;
+                            case 2:
+                                STActivity(KaoqinActivity.class);
+                                break;
 
-                           case 3:
-                               Log.d("======","=======");
+                            case 3:
+                                Log.d("======", "=======");
 //                               STActivity(KaoqinActivity.class);
-                               STActivity(MyHomeWorkActivity.class);
-                           break;
-                       }
+                                STActivity(MyHomeWorkActivity.class);
+                                break;
+                        }
 
-                   }
-               });
+                    }
+                });
 
 
-
-           }
-       };
-       rv_home_type.setLayoutManager(new GridLayoutManager(mContext,4));
+            }
+        };
+        rv_home_type.setLayoutManager(new GridLayoutManager(mContext, 4));
         rv_home_type.setNestedScrollingEnabled(false);
         rv_home_type.setAdapter(typeAdapter);
 
 
-        adapter = new LoadMoreAdapter<InformationListObj>(mContext, R.layout.item_xueyuan_zixun, pageSize,nsv) {
+        adapter = new LoadMoreAdapter<InformationListObj>(mContext, R.layout.item_xueyuan_zixun, pageSize, nsv) {
             @Override
             public void bindData(LoadMoreViewHolder holder, int position, InformationListObj bean) {
                 ImageView iv_zixun = holder.getImageView(R.id.iv_zixun);
@@ -167,9 +173,9 @@ public class HomeFragment extends BaseFragment {
                     @Override
                     protected void onNoDoubleClick(View view) {
 
-                        Intent intent=new Intent();
-                        intent.putExtra(Constant.IParam.information_id,bean.getInformation_id());
-                        STActivity(intent,ZiXunDetailActivity.class);
+                        Intent intent = new Intent();
+                        intent.putExtra(Constant.IParam.information_id, bean.getInformation_id());
+                        STActivity(intent, ZiXunDetailActivity.class);
                     }
                 });
 
@@ -189,9 +195,36 @@ public class HomeFragment extends BaseFragment {
         showProgress();
         getRoastingChart();
         getTypeAssemBlage();
-        getData(1,false);
         getUnreadNews();
+        getOtherData();
+
     }
+
+    @Override
+    protected void getOtherData() {
+        super.getOtherData();
+        getData(1, false);
+        getNextLesson();
+
+
+    }
+
+    private void getNextLesson() {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("user_id", getUserId());
+        map.put("sign", GetSign.getSign(map));
+        ApiRequest.getNextLesson(map, new MyCallBack<NextLessonObj>(mContext) {
+            @Override
+            public void onSuccess(NextLessonObj obj) {
+                tv_home_kecheng_name.setText(obj.getTitle());
+                tv_home_kecheng_time.setText(obj.getAdd_time());
+
+
+            }
+        });
+
+    }
+
     @Override
     protected void initRxBus() {
         super.initRxBus();
@@ -215,28 +248,25 @@ public class HomeFragment extends BaseFragment {
     }
 
 
-
     private void getUnreadNews() {
-        Map<String,String>map=new HashMap<String,String>();
-        map.put("user_id",getUserId());
-        map.put("sign",GetSign.getSign(map));
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("user_id", getUserId());
+        map.put("sign", GetSign.getSign(map));
         ApiRequest.getUnreadNews(map, new MyCallBack<UnreadNewsObj>(mContext) {
             @Override
             public void onSuccess(UnreadNewsObj obj) {
-                news_num=obj.getNews_num();
-                homework_num=obj.getHomework_num();
+                news_num = obj.getNews_num();
+                homework_num = obj.getHomework_num();
                 if (news_num.equals("0")) {
                     tv_home_xiaoxi_num.setVisibility(View.GONE);
-                }else {
+                } else {
                     tv_home_xiaoxi_num.setVisibility(View.VISIBLE);
                     tv_home_xiaoxi_num.setText(news_num);
 
                 }
-                if (typeAdapter!=null) {
+                if (typeAdapter != null) {
                     typeAdapter.notifyDataSetChanged();
                 }
-
-
 
 
             }
@@ -248,19 +278,19 @@ public class HomeFragment extends BaseFragment {
     protected void getData(int page, boolean isLoad) {
         super.getData(page, isLoad);
         //getInformationList
-        Map<String,String>map=new HashMap<String,String>();
-        map.put("pagesize",pageSize+"");
-        map.put("page",page+"");
-        map.put("sign",GetSign.getSign(map));
-        ApiRequest.getInformationList(map, new MyCallBack<List<InformationListObj>>(mContext,pcfl,pl_load) {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("pagesize", pageSize + "");
+        map.put("page", page + "");
+        map.put("sign", GetSign.getSign(map));
+        ApiRequest.getInformationList(map, new MyCallBack<List<InformationListObj>>(mContext, pcfl, pl_load) {
             @Override
             public void onSuccess(List<InformationListObj> obj) {
-                if(isLoad){
+                if (isLoad) {
                     pageNum++;
-                    adapter.addList(obj,true);
-                }else{
-                    pageNum=2;
-                    adapter.setList(obj,true);
+                    adapter.addList(obj, true);
+                } else {
+                    pageNum = 2;
+                    adapter.setList(obj, true);
                 }
 
             }
@@ -275,7 +305,7 @@ public class HomeFragment extends BaseFragment {
         ApiRequest.getTypeAssemBlage(map, new MyCallBack<List<TypeAssemBlageObj>>(mContext) {
             @Override
             public void onSuccess(List<TypeAssemBlageObj> obj) {
-                typeAdapter.setList(obj,true);
+                typeAdapter.setList(obj, true);
 
 
             }
@@ -358,4 +388,7 @@ public class HomeFragment extends BaseFragment {
                 break;
         }
     }
+
+
+
 }

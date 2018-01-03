@@ -94,7 +94,7 @@ public class AppInfo implements Serializable {
     public AppInfo(String id, String fileName, String title,String image,String url) {//下载完成保存数据用
         /*id fileName  title  houZhui  fileSize image url*/
         this.id = id;
-        this.fileName = fileName;
+        this.fileName = id+fileName;
         this.title = title;
         String houZhui=url.substring(url.lastIndexOf("."));
         if(houZhui.indexOf(".")==0){
