@@ -91,7 +91,7 @@ public class KaoqinActivity extends BaseActivity {
                     tv_item_kecheng.setBackgroundColor(mContext.getResources().getColor(R.color.white));
                 }else {
                     if (bean.getIs_qiandao().equals("0")) {
-                        tv_item_kecheng.setText("未到");
+                        tv_item_kecheng.setText("未签到");
                         tv_item_kecheng.setBackgroundColor(mContext.getResources().getColor(R.color.orange));
                     }else if (bean.getIs_qiandao().equals("1")){
                         tv_item_kecheng.setText("已签到");

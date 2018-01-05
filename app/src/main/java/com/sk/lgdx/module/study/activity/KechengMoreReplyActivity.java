@@ -9,10 +9,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.github.androidtools.DateUtils;
 import com.github.androidtools.inter.MyOnClickListener;
 import com.github.baseclass.adapter.LoadMoreAdapter;
 import com.github.baseclass.adapter.LoadMoreViewHolder;
+import com.github.customview.MyImageView;
 import com.github.customview.MyTextView;
 import com.sk.lgdx.GetSign;
 import com.sk.lgdx.R;
@@ -49,9 +51,12 @@ public class KechengMoreReplyActivity extends BaseActivity {
     EditText et_kecheng_more_reply_discuss;
     @BindView(R.id.tv_kecheng_more_reply_pinglun)
     MyTextView tv_kecheng_more_reply_pinglun;
+    @BindView(R.id.iv_kecheng_more_reply)
+    MyImageView iv_kecheng_more_reply;
+
 
     LoadMoreAdapter adapter;
-    String comments_id,name="",content,discussion_forum_id,reply_id;
+    String comments_id, name = "", content, discussion_forum_id, reply_id;
 
     @Override
     protected int getContentView() {
@@ -63,7 +68,7 @@ public class KechengMoreReplyActivity extends BaseActivity {
     @Override
     protected void initView() {
         getValue();
-        adapter = new LoadMoreAdapter<MoreReplyObj.ReplyListBean>(mContext, R.layout.item_kecheng_more_reply, pageSize,nsv) {
+        adapter = new LoadMoreAdapter<MoreReplyObj.ReplyListBean>(mContext, R.layout.item_kecheng_more_reply, pageSize, nsv) {
             @Override
             public void bindData(LoadMoreViewHolder holder, int i, MoreReplyObj.ReplyListBean bean) {
                 TextView tv_item_kecheng_more_reply_name = holder.getTextView(R.id.tv_item_kecheng_more_reply_name);
@@ -75,7 +80,7 @@ public class KechengMoreReplyActivity extends BaseActivity {
                 if (bean.getCode().equals("commen")) {
                     tv_item_kecheng_more_reply_toname.setVisibility(View.GONE);
                     tv_item_kecheng_more_reply_huifu.setVisibility(View.GONE);
-                }else {
+                } else {
                     tv_item_kecheng_more_reply_toname.setText(bean.getName_to());
                     tv_item_kecheng_more_reply_toname.setVisibility(View.VISIBLE);
                     tv_item_kecheng_more_reply_huifu.setVisibility(View.VISIBLE);
@@ -83,12 +88,12 @@ public class KechengMoreReplyActivity extends BaseActivity {
                 tv_item_kecheng_more_reply_comment.setOnClickListener(new MyOnClickListener() {
                     @Override
                     protected void onNoDoubleClick(View view) {
-                        reply_id=bean.getReply_id();
+                        reply_id = bean.getReply_id();
                         //弹出软键盘
-                        InputMethodManager mInput= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                        mInput.toggleSoftInput(0,InputMethodManager.SHOW_FORCED);
+                        InputMethodManager mInput = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                        mInput.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
                         et_kecheng_more_reply_discuss.requestFocus();//获取焦点
-                        et_kecheng_more_reply_discuss.setHint("请回复"+bean.getName());
+                        et_kecheng_more_reply_discuss.setHint("请回复" + bean.getName());
                         tv_kecheng_more_reply_pinglun.setText("回复");
 
                     }
@@ -107,9 +112,10 @@ public class KechengMoreReplyActivity extends BaseActivity {
     @Override
     protected void initData() {
         showProgress();
-        getData(1,false);
+        getData(1, false);
 
     }
+
     @Override
     protected void getData(int page, boolean isLoad) {
         super.getData(page, isLoad);
@@ -123,10 +129,11 @@ public class KechengMoreReplyActivity extends BaseActivity {
             @Override
             public void onSuccess(MoreReplyObj obj) {
                 tv_kecheng_more_reply_name.setText(obj.getName());
-                name=obj.getName();
-                et_kecheng_more_reply_discuss.setHint("请输入你对"+name+"的评论");
-                discussion_forum_id=obj.getComments_id();
+                name = obj.getName();
+                et_kecheng_more_reply_discuss.setHint("请输入你对" + name + "的评论");
+                discussion_forum_id = obj.getComments_id();
                 tv_kecheng_more_reply_comment.setText(obj.getContent());
+                Glide.with(mContext).load(obj.getPhoto()).error(R.drawable.my_people).into(iv_kecheng_more_reply);
                 tv_kecheng_more_reply_time.setText(DateUtils.dateToString(new Date(obj.getComment_time() * 1000), "yyyy-MM-dd HH:mm"));
                 if (isLoad) {
                     pageNum++;
@@ -149,43 +156,42 @@ public class KechengMoreReplyActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.tv_kecheng_more_reply_pinglun,R.id.tv_kecheng_more_reply_comment})
+    @OnClick({R.id.tv_kecheng_more_reply_pinglun, R.id.tv_kecheng_more_reply_comment})
     public void onViewClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.tv_kecheng_more_reply_pinglun:
                 if (tv_kecheng_more_reply_pinglun.getText().toString().equals("评论")) {
                     getAddCommentCourseWare();
-                }else {
+                } else {
                     getAddReply();
                 }
-
 
 
                 break;
             case R.id.tv_kecheng_more_reply_comment:
                 //弹出软键盘
-                InputMethodManager mInput= (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                mInput.toggleSoftInput(0,InputMethodManager.SHOW_FORCED);
+                InputMethodManager mInput = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                mInput.toggleSoftInput(0, InputMethodManager.SHOW_FORCED);
                 et_kecheng_more_reply_discuss.requestFocus();//获取焦点
-                et_kecheng_more_reply_discuss.setHint("请输入你对"+name+"的评论");
+                et_kecheng_more_reply_discuss.setHint("请输入你对" + name + "的评论");
                 tv_kecheng_more_reply_pinglun.setText("评论");
 
-            break;
+                break;
         }
     }
 
     private void getAddCommentCourseWare() {
-        content=getSStr(et_kecheng_more_reply_discuss);
+        content = getSStr(et_kecheng_more_reply_discuss);
         if (TextUtils.isEmpty(content)) {
             showMsg("评论不能为空！");
             return;
         }
         showLoading();
-        Map<String,String> map=new HashMap<String,String>();
-        map.put("forum_comment_id",discussion_forum_id);
-        map.put("user_id",getUserId());
-        map.put("type",2+"");
-        map.put("content",content);
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("forum_comment_id", discussion_forum_id);
+        map.put("user_id", getUserId());
+        map.put("type", 2 + "");
+        map.put("content", content);
         map.put("sign", GetSign.getSign(map));
         com.sk.lgdx.module.study.network.ApiRequest.getAddCommentCourseWare(map, new MyCallBack<BaseObj>(mContext) {
             @Override
@@ -194,7 +200,7 @@ public class KechengMoreReplyActivity extends BaseActivity {
                 getData(1, false);
                 showMsg(obj.getMsg());
                 et_kecheng_more_reply_discuss.setText("");
-                et_kecheng_more_reply_discuss.setHint("请输入你对"+name+"的评论");
+                et_kecheng_more_reply_discuss.setHint("请输入你对" + name + "的评论");
                 tv_kecheng_more_reply_pinglun.setText("评论");
             }
         });
@@ -204,19 +210,20 @@ public class KechengMoreReplyActivity extends BaseActivity {
 
 
     }
+
     private void getAddReply() {
-        content=getSStr(et_kecheng_more_reply_discuss);
+        content = getSStr(et_kecheng_more_reply_discuss);
         if (TextUtils.isEmpty(content)) {
             showMsg("内容不能为空！");
             return;
         }
         showLoading();
-        Map<String,String>map=new HashMap<String,String>();
-        map.put("comment_id",comments_id);
-        map.put("reply_id",reply_id);
-        map.put("user_id",getUserId());
-        map.put("content",content);
-        map.put("sign",GetSign.getSign(map));
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("comment_id", comments_id);
+        map.put("reply_id", reply_id);
+        map.put("user_id", getUserId());
+        map.put("content", content);
+        map.put("sign", GetSign.getSign(map));
         ApiRequest.getAddReply(map, new MyCallBack<BaseObj>(mContext) {
             @Override
             public void onSuccess(BaseObj obj) {
@@ -224,7 +231,7 @@ public class KechengMoreReplyActivity extends BaseActivity {
                 getData(1, false);
                 showMsg(obj.getMsg());
                 et_kecheng_more_reply_discuss.setText("");
-                et_kecheng_more_reply_discuss.setHint("请输入你对"+name+"的评论");
+                et_kecheng_more_reply_discuss.setHint("请输入你对" + name + "的评论");
                 tv_kecheng_more_reply_pinglun.setText("评论");
 
             }
@@ -232,7 +239,6 @@ public class KechengMoreReplyActivity extends BaseActivity {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         //隐藏软键盘 //
         imm.hideSoftInputFromWindow(et_kecheng_more_reply_discuss.getWindowToken(), 0);
-
 
 
     }

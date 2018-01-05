@@ -31,6 +31,7 @@
                    android:background="@color/white"
                    >
                    <LinearLayout
+                       android:layout_marginTop="5dp"
                        android:layout_width="match_parent"
                        android:layout_height="40dp"
                        android:background="@color/white"
@@ -44,7 +45,7 @@
                            android:layout_width="35dp"
                            android:layout_height="35dp"
                            android:scaleType="centerCrop"
-                           app:my_iv_radius="15dp"
+                           app:my_iv_radius="17dp"
                            android:src="@drawable/my_people"
                            />
 

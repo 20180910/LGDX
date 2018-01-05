@@ -195,7 +195,7 @@ public class HomeFragment extends BaseFragment {
         showProgress();
         getRoastingChart();
         getTypeAssemBlage();
-        getUnreadNews();
+        getData(1, false);
         getOtherData();
 
     }
@@ -203,8 +203,9 @@ public class HomeFragment extends BaseFragment {
     @Override
     protected void getOtherData() {
         super.getOtherData();
-        getData(1, false);
+
         getNextLesson();
+        getUnreadNews();
 
 
     }

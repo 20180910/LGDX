@@ -46,7 +46,12 @@ public class PDF2Activity extends BaseActivity {
     protected void initView() {
         pdfUrl = getIntent().getStringExtra(Constant.IParam.video_pdf);
         title=getIntent().getStringExtra(Constant.IParam.title);
-        setAppTitle(title);
+        if (title.length()>13) {
+            setAppTitle(title.substring(0,10)+"...");
+        }else {
+            setAppTitle(title);
+        }
+
 
     }
 
@@ -107,7 +112,7 @@ public class PDF2Activity extends BaseActivity {
                 showLoading();
                 pdf_view.fromStream( inputStream)
                         .enableSwipe(true) // allows to block changing pages using swipe
-                        .swipeHorizontal(true)
+                        .swipeHorizontal(false)
                         .enableDoubletap(false)
                         .defaultPage(0)
                         // 允许在当前页面上绘制一些内容，通常在屏幕中间可见。
@@ -131,8 +136,8 @@ public class PDF2Activity extends BaseActivity {
                             @Override
                             public void onPageChanged(int page, int pageCount) {
                                 Log.i("===","=onPageChanged==page="+page+"===pageCount=="+pageCount);
-                                num=page+1;
-                                setAppTitle(num+"/"+numSize+"页");
+//                                num=page+1;
+//                                setAppTitle(num+"/"+numSize+"页");
                                 dismissLoading();
                             }
                         })

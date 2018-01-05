@@ -1,10 +1,13 @@
 package com.sk.lgdx.module.my.activity;
 
-import android.content.DialogInterface;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Environment;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -12,9 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.aspsine.multithreaddownload.DownloadManager;
 import com.github.androidtools.SPUtils;
-import com.github.baseclass.view.MyDialog;
 import com.github.customview.MyCheckBox;
 import com.github.customview.MyTextView;
 import com.sk.lgdx.Config;
@@ -25,9 +26,9 @@ import com.sk.lgdx.base.MyCallBack;
 import com.sk.lgdx.module.home.activity.MainActivity;
 import com.sk.lgdx.module.my.network.ApiRequest;
 import com.sk.lgdx.module.my.network.response.LoginObj;
-import com.sk.lgdx.tools.download.entity.AppInfo;
-import com.sk.lgdx.tools.download.service.DownloadService;
+import com.sk.lgdx.tools.download.util.FileUtils;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,6 +66,26 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        float newVersionCode=getVersionCode(mContext);
+        Log.i("===","===最新newVersionCode="+newVersionCode);
+
+      float spVersionCode= SPUtils.getPrefFloat(mContext, Config.spVersionCode,0);
+        Log.i("===","===spVersionCode="+newVersionCode);
+        if (newVersionCode>spVersionCode) {
+            SPUtils.setPrefFloat(mContext, Config.spVersionCode,newVersionCode);
+            Log.i("===","===第一次");
+
+            deleteDir(FileUtils.DOWNLOAD_DIR);
+        }else {
+            Log.i("===","===不是第一次");
+
+        }
+
+
+
+
+
+
         action = getIntent().getAction();
         cb_login_setting.setOnCheckedChangeListener(new CheckBox.OnCheckedChangeListener() {
 
@@ -85,6 +106,38 @@ public class LoginActivity extends BaseActivity {
 
     }
 
+    private float getVersionCode(Context context) {
+        float versionCode=0;
+        try {
+            versionCode=context.getPackageManager().getPackageInfo(context.getPackageName(),0).versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return versionCode;
+
+    }
+    //删除文件夹和文件夹里面的文件
+    public static void deleteDir(final String pPath) {
+        File dir = new File(Environment.getExternalStorageDirectory(), pPath);
+        deleteDirWihtFile(dir);
+    }
+
+    public static void deleteDirWihtFile(File dir) {
+        if (dir == null || !dir.exists() || !dir.isDirectory()){
+            Log.i("===","===dir="+dir);
+            Log.i("===","===dir="+dir.exists());
+            return;
+        }
+
+        for (File file : dir.listFiles()) {
+            if (file.isFile())
+                file.delete(); // 删除所有文件
+            else if (file.isDirectory())
+                deleteDirWihtFile(file); // 递规的方式删除文件夹
+        }
+        dir.delete();// 删除目录本身
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -101,13 +154,10 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    @Override
-    protected void onViewClick(View v) {
 
-    }
 
     @OnClick({R.id.iv_login_dowm,  R.id.tv_login_wangjimima, R.id.tv_login})
-    public void onClick(View view) {
+    public void onViewClick(View view) {
         switch (view.getId()) {
             case R.id.iv_login_dowm:
                 break;

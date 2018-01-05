@@ -125,6 +125,15 @@ public class ApiRequest extends BaseApiRequest {
         getGeneralClient(IRequest.class).getMyCollection(map).enqueue(callBack);
     }
 
+    //删除我的收藏
+    public static void getDelMyCollect(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getDelMyCollect(map).enqueue(callBack);
+    }
+
 
     /********************************分割线**********************************************/
 

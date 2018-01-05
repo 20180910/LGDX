@@ -25,6 +25,7 @@ yTKTw0Ct5XUkIoGhR8DIwFus4P0lR9Tq  百度地图*/
     public static final String sina_appSecret = "3fe03c61ef9990cc80c19208fc143600";
 
     public static final String jiguangRegistrationId="jiguangRegistrationId";
+    public static final String spVersionCode="spVersionCode";
 
     public static final String qq_id = "1106447576";
     public static final String qq_key = "yPCR9PMcR651HXbQ";

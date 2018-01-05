@@ -16,6 +16,7 @@ public class StudyDetailObj extends BaseObj {
      * video_pdf : http://121.40.186.118:1554/upload/201712/08/201712081041304454.mp4
      * title : 小葵花爸爸课堂开课啦
      * keynote_speaker_image :
+     * individuality_signature :
      * keynote_speaker : 魏老师
      * courseware_introduction : 孩子发烧老不好?多半是装的,打一顿就好了呀
      * is_thumbup : 1
@@ -28,6 +29,7 @@ public class StudyDetailObj extends BaseObj {
     private String courseware_id;
     private String video_pdf;
     private String title;
+    private String individuality_signature;
     private String keynote_speaker_image;
     private String keynote_speaker;
     private String courseware_introduction;
@@ -35,6 +37,15 @@ public class StudyDetailObj extends BaseObj {
 //    private String is_collect;
     private String thumbup_count;
     private String comment_count;
+
+    public String getIndividuality_signature() {
+        return individuality_signature;
+    }
+
+    public void setIndividuality_signature(String individuality_signature) {
+        this.individuality_signature = individuality_signature;
+    }
+
     private List<CommentListBean> comment_list;
 
     public String getCourseware_introduction() {

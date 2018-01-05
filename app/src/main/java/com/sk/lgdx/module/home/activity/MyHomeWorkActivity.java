@@ -70,7 +70,6 @@ public class MyHomeWorkActivity extends BaseActivity {
         adapter.setOnLoadMoreListener(this);
         rv_my_home_work.setLayoutManager(new LinearLayoutManager(mContext));
         rv_my_home_work.setNestedScrollingEnabled(false);
-        rv_my_home_work.addItemDecoration(getItemDivider(10));
         rv_my_home_work.setAdapter(adapter);
 
 

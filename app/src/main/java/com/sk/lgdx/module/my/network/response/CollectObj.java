@@ -24,6 +24,7 @@ public class CollectObj implements Serializable {
         /**
          * courseware_id : 10
          * image_url : http://121.40.186.118:1554/upload/201712/15/201712151116033542.jpg
+         * "video_pdf": "http://121.40.186.118:1554/upload/201712/22/201712221005353985.mp4",
          * title : 啦啦啦啦啦
          * keynote_speaker : 
          * add_time : 2017-12-15
@@ -34,12 +35,21 @@ public class CollectObj implements Serializable {
 
         private String courseware_id;
         private String image_url;
+        private String video_pdf;
         private String title;
         private String keynote_speaker;
         private String add_time;
         private String sales;
         private String thumbup_count;
         private String courseware_record_count;
+
+        public String getVideo_pdf() {
+            return video_pdf;
+        }
+
+        public void setVideo_pdf(String video_pdf) {
+            this.video_pdf = video_pdf;
+        }
 
         public String getCourseware_id() {
             return courseware_id;

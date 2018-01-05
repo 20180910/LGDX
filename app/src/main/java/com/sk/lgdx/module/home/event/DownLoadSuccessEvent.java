@@ -5,4 +5,9 @@ package com.sk.lgdx.module.home.event;
  */
 
 public class DownLoadSuccessEvent {
+    public  String type;
+    public DownLoadSuccessEvent(String type){
+        this.type=type;
+    }
+
 }

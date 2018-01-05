@@ -4,8 +4,10 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
+import com.github.androidtools.PhoneUtils;
 import com.github.androidtools.inter.MyOnClickListener;
 import com.github.baseclass.adapter.BaseRecyclerAdapter;
 import com.github.baseclass.adapter.RecyclerViewHolder;
@@ -54,6 +56,16 @@ public class AddImgAdapter extends BaseRecyclerAdapter<String> {
 
         }else{
             ImageView imageView = itemHolder.getImageView(R.id.iv_add_img);
+
+            int   screenW = mContext.getResources().getDisplayMetrics().widthPixels;
+            int wh=(screenW- PhoneUtils.dip2px(mContext,30))/3;
+            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+            params.width = wh;
+            params.height =  wh;
+            params.setMargins(PhoneUtils.dip2px(mContext,5),0,PhoneUtils.dip2px(mContext,5),0);
+            imageView.setLayoutParams(params);
+
+
             Glide.with(mContext).load(bean).error(R.color.c_press).into(imageView);
         }
     }

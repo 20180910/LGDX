@@ -246,7 +246,7 @@ public class DownloadService extends Service {
             mAppInfo.setProgress(100);
             DBHelper.newInstance(mContext).insert(mAppInfo);
             sendBroadCast(mAppInfo);
-            RxBus.getInstance().post(new DownLoadSuccessEvent());
+            RxBus.getInstance().post(new DownLoadSuccessEvent("success"));
 
 
 

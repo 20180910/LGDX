@@ -79,6 +79,10 @@ public interface IRequest {
     @GET("api/SHLGInformation/GetMyCollection")
     Call<ResponseObj<CollectObj>> getMyCollection(@QueryMap Map<String, String> map);
 
+    //删除我的收藏
+    @GET("api/SHLGInformation/GetDelMyCollect")
+    Call<ResponseObj<BaseObj>> getDelMyCollect(@QueryMap Map<String, String> map);
+
 
 
 

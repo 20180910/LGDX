@@ -46,18 +46,19 @@ public class NewScanActivity extends BaseActivity {
         CodeUtils.AnalyzeCallback analyzeCallback = new CodeUtils.AnalyzeCallback() {
             @Override
             public void onAnalyzeSuccess(Bitmap mBitmap, String result) {
-                Log.i("===","==="+result);
-                Map<String,String> map=new HashMap<String,String>();
-                map.put("user_id",getUserId());
-                map.put("code",result);
+                Log.i("===", "===" + result);
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("user_id", getUserId());
+                map.put("code", result);
                 map.put("sign", GetSign.getSign(map));
                 ApiRequest.getSignIn(map, new MyCallBack<BaseObj>(mContext) {
                     @Override
                     public void onSuccess(BaseObj obj) {
                         RxBus.getInstance().post(new SaomaEvent());
-
+                        showMsg("签到成功");
                         finish();
                     }
+
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
@@ -105,15 +106,15 @@ public class NewScanActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.iv_scan_back,R.id.ll_scan_shou_dian})
+    @OnClick({R.id.iv_scan_back, R.id.ll_scan_shou_dian})
     protected void onViewClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.iv_scan_back:
                 finish();
                 break;
             case R.id.ll_scan_shou_dian:
                 CodeUtils.isLightEnable(!isLight);
-                isLight=!isLight;
+                isLight = !isLight;
                 break;
         }
     }

@@ -1,7 +1,6 @@
 package com.sk.lgdx.module.taolun.adapter;
 
 import android.content.Context;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
@@ -27,11 +26,13 @@ public class TaolunImgAdapter extends BaseRecyclerAdapter<String> {
     public void bindData(RecyclerViewHolder holder, int position, String bean) {
         ImageView iv_item_taolun_img = holder.getImageView(R.id.iv_item_taolun_img);
 
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.width = PhoneUtils.getScreenWidth(mContext)/3;
-        layoutParams.height = (int) ( layoutParams.width*0.45);
-
-        iv_item_taolun_img.setLayoutParams(layoutParams);
+        int   screenW = mContext.getResources().getDisplayMetrics().widthPixels;
+        int wh=(screenW-PhoneUtils.dip2px(mContext,30))/3;
+        LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv_item_taolun_img.getLayoutParams();
+        params.width = wh;
+        params.height =  wh;
+        params.setMargins(PhoneUtils.dip2px(mContext,5),0,PhoneUtils.dip2px(mContext,5),0);
+        iv_item_taolun_img.setLayoutParams(params);
         Glide.with(mContext).load(bean).error(R.color.c_press).into(iv_item_taolun_img);
 
 

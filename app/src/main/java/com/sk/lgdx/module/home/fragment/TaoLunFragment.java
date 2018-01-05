@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.github.androidtools.PhoneUtils;
 import com.github.androidtools.inter.MyOnClickListener;
 import com.github.baseclass.adapter.LoadMoreAdapter;
 import com.github.baseclass.adapter.LoadMoreViewHolder;
@@ -23,7 +22,6 @@ import com.sk.lgdx.module.taolun.activity.TaolunDetailsActivity;
 import com.sk.lgdx.module.taolun.adapter.TaolunImgAdapter;
 import com.sk.lgdx.module.taolun.network.ApiRequest;
 import com.sk.lgdx.module.taolun.network.response.TaolunquObj;
-import com.sk.lgdx.tools.DividerGridItemDecoration;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -101,8 +99,6 @@ public class TaoLunFragment extends BaseFragment {
                 imgAdapter.setList(imgList,true);
 
                 rv_item_taolun_img.setLayoutManager(new GridLayoutManager(mContext, 3));
-                rv_item_taolun_img.addItemDecoration(new DividerGridItemDecoration(mContext, PhoneUtils.dip2px(mContext,5),R.color.white));
-                rv_item_taolun_img.setNestedScrollingEnabled(false);
                 rv_item_taolun_img.setAdapter(imgAdapter);
 
 

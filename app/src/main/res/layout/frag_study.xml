@@ -34,7 +34,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="大学英语"
+                android:text="请搜索课件名称"
                 android:layout_marginLeft="6dp"
                 />
         </com.github.customview.MyLinearLayout>

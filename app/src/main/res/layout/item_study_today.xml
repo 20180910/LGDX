@@ -28,6 +28,9 @@
         android:id="@+id/tv_item_study_tody_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:lines="2"
+        android:ellipsize="end"
         android:text="高等数学"
         android:textSize="13sp"
         android:textColor="@color/gray_33"
@@ -54,6 +57,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="张三"
+            android:paddingLeft="5dp"
             android:textSize="13sp"
             android:textColor="@color/gray_66"
             />

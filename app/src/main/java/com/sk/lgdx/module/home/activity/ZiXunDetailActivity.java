@@ -1,6 +1,9 @@
 package com.sk.lgdx.module.home.activity;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.view.View;
+import android.webkit.DownloadListener;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.TextView;
@@ -112,6 +115,14 @@ public class ZiXunDetailActivity extends BaseActivity {
         settings.setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
 
         settings.setLoadsImagesAutomatically(true);//自动加载图片
+        wv_zixun_detail.setDownloadListener(new DownloadListener() {
+            @Override
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype,long contentLength) {
+                Uri uri = Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
 
     }
     private void showWebView(String content) {

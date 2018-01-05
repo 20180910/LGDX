@@ -4,7 +4,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:background="@color/background_f2"
+              android:background="@color/white"
     >
 <LinearLayout
     android:layout_width="match_parent"
@@ -29,11 +29,15 @@
         android:textColor="@color/gray_66"
         />
 </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/background_f2"
+        />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rv_item_my_home_work"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="2px"
         >
         
     </android.support.v7.widget.RecyclerView>

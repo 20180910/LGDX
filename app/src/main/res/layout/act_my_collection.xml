@@ -4,7 +4,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/background_f2"
+              android:background="@color/white"
     >
 <include layout="@layout/app_title"/>
     <com.sk.lgdx.base.ProgressLayout
@@ -22,10 +22,11 @@
                 android:id="@+id/rv_my_collection"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginTop="2px"
                 >
                 
             </android.support.v7.widget.RecyclerView>
+
+
         </in.srain.cube.views.ptr.PtrClassicFrameLayout>
     </com.sk.lgdx.base.ProgressLayout>
 </LinearLayout>

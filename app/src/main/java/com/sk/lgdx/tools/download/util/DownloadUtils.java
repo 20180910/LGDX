@@ -2,15 +2,15 @@ package com.sk.lgdx.tools.download.util;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.aspsine.multithreaddownload.DownloadManager;
-import com.github.baseclass.view.MyDialog;
+import com.github.baseclass.rx.RxBus;
 import com.sk.lgdx.database.DBHelper;
+import com.sk.lgdx.module.home.event.DownLoadSuccessEvent;
 import com.sk.lgdx.tools.download.entity.AppInfo;
 import com.sk.lgdx.tools.download.service.DownloadService;
 
@@ -45,25 +45,28 @@ public class DownloadUtils {
             msg="文件已下载,是否重新下载?";
         }
         if (isExist|| DownloadManager.getInstance().getDownloadInfo(info.getId()) != null) {
-            MyDialog.Builder mDialog = new MyDialog.Builder(context);
-            mDialog.setMessage(msg);
-            mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    DownloadManager.getInstance().delete(info.getId());
-                    DownloadService.intentDownload(context, info);
-                }
-            });
-            mDialog.create().show();
+            RxBus.getInstance().post(new DownLoadSuccessEvent("yes"));
+
+//            MyDialog.Builder mDialog = new MyDialog.Builder(context);
+//            mDialog.setMessage(msg);
+//            mDialog.setNegativeButton(new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.dismiss();
+//                }
+//            });
+//            mDialog.setPositiveButton(new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.dismiss();
+//                    DownloadManager.getInstance().delete(info.getId());
+//                    DownloadService.intentDownload(context, info);
+//                }
+//            });
+//            mDialog.create().show();
         } else {
             DownloadService.intentDownload(context, info);
+            RxBus.getInstance().post(new DownLoadSuccessEvent("no"));
         }
     }
     public static List<AppInfo> getDownloadCompleteFile(Context context) {

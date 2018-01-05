@@ -7,7 +7,6 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,7 +33,6 @@ import com.sk.lgdx.module.taolun.adapter.TaolunDetailsCommentAdapter;
 import com.sk.lgdx.module.taolun.network.ApiRequest;
 import com.sk.lgdx.module.taolun.network.response.DianzanObj;
 import com.sk.lgdx.module.taolun.network.response.TaolunDetailsObj;
-import com.sk.lgdx.tools.DividerGridItemDecoration;
 import com.sk.lgdx.tools.SoftKeyBoardListener;
 
 import java.util.ArrayList;
@@ -160,17 +158,19 @@ public class TaolunDetailsActivity extends BaseActivity {
             public void bindData(RecyclerViewHolder holder, int position, String bean) {
                 ImageView iv_item_taolun_img = holder.getImageView(R.id.iv_item_taolun_img);
 
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                layoutParams.width = PhoneUtils.getScreenWidth(mContext) / 3;
-                layoutParams.height = (int) (layoutParams.width * 0.45);
-
-                iv_item_taolun_img.setLayoutParams(layoutParams);
+                int   screenW = mContext.getResources().getDisplayMetrics().widthPixels;
+                int wh=(screenW-PhoneUtils.dip2px(mContext,30))/3;
+                LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) iv_item_taolun_img.getLayoutParams();
+                params.width = wh;
+                params.height =  wh;
+                params.setMargins(PhoneUtils.dip2px(mContext,5),0,PhoneUtils.dip2px(mContext,5),0);
+                iv_item_taolun_img.setLayoutParams(params);
                 Glide.with(mContext).load(bean).error(R.color.c_press).into(iv_item_taolun_img);
 
             }
         };
         rv_item_taolun_details_img.setLayoutManager(new GridLayoutManager(mContext, 3));
-        rv_item_taolun_details_img.addItemDecoration(new DividerGridItemDecoration(mContext, PhoneUtils.dip2px(mContext, 5), R.color.white));
+//        rv_item_taolun_details_img.addItemDecoration(new DividerGridItemDecoration(mContext, PhoneUtils.dip2px(mContext, 5), R.color.white));
         rv_item_taolun_details_img.setNestedScrollingEnabled(false);
         rv_item_taolun_details_img.setAdapter(imgadapter);
 
@@ -283,11 +283,16 @@ public class TaolunDetailsActivity extends BaseActivity {
                             null,
                             null,
                             null);
+                    iv_taolun_details_zan.setImageDrawable(mContext.getResources().getDrawable(R.drawable.icon_dianzan));
+
+
+
                 } else {
                     tv_taolun_details_zan.setCompoundDrawablesWithIntrinsicBounds(mContext.getResources().getDrawable(R.drawable.my_collection_zan_selset),
                             null,
                             null,
                             null);
+                    iv_taolun_details_zan.setImageDrawable(mContext.getResources().getDrawable(R.drawable.dianzan_select));
                 }
                 List<String> imgList = new ArrayList<String>();
                 for (int i = 0; i < obj.getImage_list().size(); i++) {

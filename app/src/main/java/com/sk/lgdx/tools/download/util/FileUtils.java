@@ -10,7 +10,7 @@ import java.io.File;
  * Created by aspsine on 15-4-19.
  */
 public class FileUtils {
-    private static final String DOWNLOAD_DIR = "lgdxdownload";
+    public static final String DOWNLOAD_DIR = "lgdxdownload";
 
     public static final File getDownloadDir() {
         /*if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {

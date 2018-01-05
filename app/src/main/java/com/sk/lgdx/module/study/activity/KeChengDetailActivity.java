@@ -173,6 +173,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
                 tv_kecheng_detail_title.setText(obj.getTitle());
                 title=obj.getTitle();
                 detailFragment.setImg(obj.getKeynote_speaker_image());
+                detailFragment.setIndividuality_signature(obj.getIndividuality_signature());
                 detailFragment.setName(obj.getKeynote_speaker());
                 detailFragment.setCourseware(obj.getCourseware_introduction());
                 evaluateFragment.setComment_count(obj.getComment_count());
@@ -221,11 +222,22 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
                 nsv.scrollTo(0, 0);
             }
         });
-        getRxBusEvent(DownLoadSuccessEvent.class, new MySubscriber() {
+        getRxBusEvent(DownLoadSuccessEvent.class, new MySubscriber<DownLoadSuccessEvent>() {
             @Override
-            public void onMyNext(Object o) {
+            public void onMyNext(DownLoadSuccessEvent event) {
+                if (event.type.equals("success")) {
+                    getDownloadRecord();
+                    showMsg("下载已完成");
+
+                }else if (event.type.equals("yes")){
+                    showMsg("已下载");
+
+                }else if (event.type.equals("no")){
+                    showMsg("正在下载中");
+
+                }
                 //courseware_id
-                getDownloadRecord();
+
 
 
             }

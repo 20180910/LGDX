@@ -76,6 +76,9 @@ public abstract class BaseFragment extends IBaseFragment implements View.OnClick
         if(null!=view.findViewById(R.id.pcfl_refresh)){
             pcfl = (PtrClassicFrameLayout) view.findViewById(R.id.pcfl_refresh);
             pcfl.setLastUpdateTimeRelateObject(this);
+            pcfl.setOffsetXFlag((int) 0.5);
+            pcfl.setHorizontalMoveFlag(4);
+            pcfl.setScaledTouchSlopFlag(4);
             pcfl.disableWhenHorizontalMove(true);
             pcfl.setPtrHandler(new PtrDefaultHandler() {
                 @Override

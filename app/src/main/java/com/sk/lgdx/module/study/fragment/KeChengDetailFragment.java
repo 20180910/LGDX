@@ -59,6 +59,14 @@ public class KeChengDetailFragment extends BaseFragment {
         Glide.with(mContext).load(img).error(R.drawable.my_people).into(iv_kecheng_detail_icon);
 
     }
+    public void setIndividuality_signature(String individuality_signature) {
+        if (individuality_signature.equals("")) {
+            tv_kecheng_detail_jieshao.setText("无个性签名");
+        }else {
+            tv_kecheng_detail_jieshao.setText(individuality_signature);
+        }
+
+    }
 
     public void setName(String keynote_speaker) {
         tv_kecheng_detail_name.setText(keynote_speaker);
