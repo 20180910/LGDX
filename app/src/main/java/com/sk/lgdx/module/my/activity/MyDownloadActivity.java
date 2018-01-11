@@ -69,13 +69,25 @@ public class MyDownloadActivity extends BaseActivity {
                 TextView tv_item_my_download_name = holder.getTextView(R.id.tv_item_my_download_name);
                 TextView tv_item_my_download_type = holder.getTextView(R.id.tv_item_my_download_type);
                 TextView tv_item_my_download_size = holder.getTextView(R.id.tv_item_my_download_size);
-                Log.d("=======", "=====bean.getImage()=" + bean.getImage());
-                Glide.with(mContext).load(bean.getImage()).error(R.color.c_press).into(iv_item_my_download_icon);
+//                Log.d("=======", "=====bean.getImage()=" + bean.getImage());
+                if (bean.getImage().equals("lgdx上理传播E学堂")) {
+                    iv_item_my_download_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.icon_app));
+
+                }else {
+                    if (bean.getImage().equals("")) {
+                        iv_item_my_download_icon.setImageDrawable(mContext.getResources().getDrawable(R.drawable.wenjian));
+
+                    }else {
+
+                        Glide.with(mContext).load(bean.getImage()).error(R.color.c_press).into(iv_item_my_download_icon);
+                    }
+                }
+
                 tv_item_my_download_name.setText(bean.getTitle());
-                if (bean.getHouZhui().equals("mp4")) {
+                if (bean.getHouZhui().equals("mp4")||bean.getHouZhui().equals("MP4")) {
                     tv_item_my_download_type.setText("视频");
                 } else {
-                    tv_item_my_download_type.setText("PDF");
+                    tv_item_my_download_type.setText(bean.getHouZhui());
                 }
 
                 tv_item_my_download_size.setText(formetFileSize(Double.parseDouble(bean.getFileSize())));
@@ -161,7 +173,7 @@ public class MyDownloadActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.app_right_tv:
                 ArrayList<AppInfo> arrylist = (ArrayList<AppInfo>) adapter.getList();
-                if (arrylist.size()!=0) {
+//                if (arrylist.size()!=0) {
                     isEdit = !isEdit;
                     if (isEdit) {
                         setAppRightTitle("完成");
@@ -171,9 +183,9 @@ public class MyDownloadActivity extends BaseActivity {
                         ll_my_download_bianji.setVisibility(View.GONE);
                     }
                     adapter.notifyDataSetChanged();
-                }else {
-                    showMsg("当前没事下载的文件");
-                }
+//                }else {
+//                    showMsg("当前没事下载的文件");
+//                }
                 break;
 
             case R.id.tv_my_download_quanxuan:

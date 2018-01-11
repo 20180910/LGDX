@@ -10,7 +10,7 @@
                                             app:ios="false"
                                             app:leftSwipe="true"
                                             app:swipeEnable="true"
-    >
+                                            xmlns:tools="http://schemas.android.com/tools">
 
 
     <LinearLayout
@@ -33,7 +33,7 @@
                 android:layout_width="110dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:background="@drawable/banner"
+                tools:src="@drawable/banner"
                 />
 
             <LinearLayout

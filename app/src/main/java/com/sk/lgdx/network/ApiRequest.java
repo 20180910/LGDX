@@ -8,6 +8,8 @@ import com.sk.lgdx.module.my.network.request.UploadImgBody;
 
 import java.util.Map;
 
+import okhttp3.MultipartBody;
+
 /**
  * Created by Administrator on 2017/6/28.
  */
@@ -40,6 +42,25 @@ public class ApiRequest extends BaseApiRequest {
             return;
         }
         getGeneralClient(IRequest.class).getSMSCode(map).enqueue(callBack);
+    }
+    //上传文件
+
+    public static void postUploadFile(Map map, MultipartBody.Part file, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).postUploadFile(map,file).enqueue(callBack);
+    }
+
+
+    public static void uploadFile(Map map, MultipartBody.Part file, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).uploadFile(map,file).enqueue(callBack);
+//        NetWorkManager.getSimpleClient().create(IRequest.class).uploadFile(map,file).enqueue(callBack);
     }
 
 

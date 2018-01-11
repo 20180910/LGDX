@@ -7,10 +7,27 @@
               android:layout_height="wrap_content"
               android:background="@color/white"
     >
-    <ImageView
-        android:id="@+id/iv_add_img"
-        android:layout_width="94dp"
-        android:layout_height="94dp"
-        tools:src="@drawable/banner"
-        />
+  <RelativeLayout
+      android:layout_width="wrap_content"
+      android:layout_height="wrap_content"
+      >
+      <ImageView
+          android:id="@+id/iv_add_img"
+          android:layout_width="94dp"
+          android:layout_height="94dp"
+          tools:src="@drawable/banner"
+          />
+      <TextView
+          android:visibility="gone"
+          android:id="@+id/tv_add_name"
+          android:layout_width="94dp"
+          android:layout_height="94dp"
+          android:textColor="@color/white"
+          android:textSize="12sp"
+          android:gravity="center"
+          android:padding="5dp"
+          android:background="@color/home_text_color"
+          android:text=""
+          />
+  </RelativeLayout>
 </LinearLayout>

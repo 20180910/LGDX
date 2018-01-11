@@ -1,9 +1,6 @@
 package com.sk.lgdx.module.my.activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Environment;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -28,7 +25,6 @@ import com.sk.lgdx.module.my.network.ApiRequest;
 import com.sk.lgdx.module.my.network.response.LoginObj;
 import com.sk.lgdx.tools.download.util.FileUtils;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -66,7 +62,7 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        float newVersionCode=getVersionCode(mContext);
+        float newVersionCode=getAppVersionCode();
         Log.i("===","===最新newVersionCode="+newVersionCode);
 
       float spVersionCode= SPUtils.getPrefFloat(mContext, Config.spVersionCode,0);
@@ -106,37 +102,8 @@ public class LoginActivity extends BaseActivity {
 
     }
 
-    private float getVersionCode(Context context) {
-        float versionCode=0;
-        try {
-            versionCode=context.getPackageManager().getPackageInfo(context.getPackageName(),0).versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return versionCode;
 
-    }
-    //删除文件夹和文件夹里面的文件
-    public static void deleteDir(final String pPath) {
-        File dir = new File(Environment.getExternalStorageDirectory(), pPath);
-        deleteDirWihtFile(dir);
-    }
 
-    public static void deleteDirWihtFile(File dir) {
-        if (dir == null || !dir.exists() || !dir.isDirectory()){
-            Log.i("===","===dir="+dir);
-            Log.i("===","===dir="+dir.exists());
-            return;
-        }
-
-        for (File file : dir.listFiles()) {
-            if (file.isFile())
-                file.delete(); // 删除所有文件
-            else if (file.isDirectory())
-                deleteDirWihtFile(file); // 递规的方式删除文件夹
-        }
-        dir.delete();// 删除目录本身
-    }
 
     @Override
     protected void onResume() {

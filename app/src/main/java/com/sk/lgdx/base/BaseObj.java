@@ -27,6 +27,7 @@ public class BaseObj implements Serializable {
     }
 
 
+    private String url;
     private String SMSCode;
     private String img;
     private int payment_type;
@@ -43,6 +44,14 @@ public class BaseObj implements Serializable {
 
     public int getPayment_type() {
         return payment_type;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
     public void setPayment_type(int payment_type) {

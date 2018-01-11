@@ -1,9 +1,13 @@
 package com.sk.lgdx.base;
 
+import android.content.Context;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Rect;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.ColorRes;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v4.content.ContextCompat;
@@ -41,6 +45,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.util.List;
 import java.util.Random;
 
@@ -680,6 +685,41 @@ public abstract class BaseActivity extends IBaseActivity implements ProgressLayo
             fenXiangDialog.setContentView(sexView);
         }
         fenXiangDialog.show();
+    }
+    public int getAppVersionCode() {
+        Context context=mContext;
+        int versioncode = 1;
+        try {
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+            String versionName = pi.versionName;
+            versioncode = pi.versionCode;
+            return versioncode;
+        } catch (Exception e) {
+            Log.e("VersionInfo", "Exception", e);
+        }
+        return versioncode;
+    }
+    //删除文件夹和文件夹里面的文件
+    public  void deleteDir(final String pPath) {
+        File dir = new File(Environment.getExternalStorageDirectory(), pPath);
+        deleteDirWihtFile(dir);
+    }
+
+    public  void deleteDirWihtFile(File dir) {
+        if (dir == null || !dir.exists() || !dir.isDirectory()){
+            Log.i("===","===dir="+dir);
+            Log.i("===","===dir="+dir.exists());
+            return;
+        }
+
+        for (File file : dir.listFiles()) {
+            if (file.isFile())
+                file.delete(); // 删除所有文件
+            else if (file.isDirectory())
+                deleteDirWihtFile(file); // 递规的方式删除文件夹
+        }
+        dir.delete();// 删除目录本身
     }
 
 

@@ -5,6 +5,7 @@ import com.sk.lgdx.base.ResponseObj;
 import com.sk.lgdx.module.home.network.request.HomeTypeMerchantListBody;
 import com.sk.lgdx.module.home.network.request.QuerentijiaoBody;
 import com.sk.lgdx.module.home.network.response.AreaBusinessCircleObj;
+import com.sk.lgdx.module.home.network.response.BanbengengxinObj;
 import com.sk.lgdx.module.home.network.response.CityIdObj;
 import com.sk.lgdx.module.home.network.response.HomeAnnouncementObj;
 import com.sk.lgdx.module.home.network.response.HomeDailybestObj;
@@ -94,6 +95,9 @@ public interface IRequest {
     //下一节课
     @GET ("api/SHLGStudent/GetNextLesson")
     Call<ResponseObj<NextLessonObj>> getNextLesson(@QueryMap Map<String, String> map);
+    //Android版本更新
+    @GET ("api/SHLGPub/GetVersionUpdate")
+    Call<ResponseObj<BanbengengxinObj>> getVersionUpdate(@QueryMap Map<String, String> map);
 
 
 

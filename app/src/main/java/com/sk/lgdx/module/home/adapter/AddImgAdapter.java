@@ -1,10 +1,12 @@
 package com.sk.lgdx.module.home.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.github.androidtools.PhoneUtils;
@@ -56,17 +58,47 @@ public class AddImgAdapter extends BaseRecyclerAdapter<String> {
 
         }else{
             ImageView imageView = itemHolder.getImageView(R.id.iv_add_img);
+            TextView  tv_add_name = itemHolder.getTextView(R.id.tv_add_name);
 
             int   screenW = mContext.getResources().getDisplayMetrics().widthPixels;
-            int wh=(screenW- PhoneUtils.dip2px(mContext,30))/3;
-            LinearLayout.LayoutParams params = (LinearLayout.LayoutParams) imageView.getLayoutParams();
+            int wh=(screenW- PhoneUtils.dip2px(mContext,40))/3;
+            RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) imageView.getLayoutParams();
+            RelativeLayout.LayoutParams params2 = (RelativeLayout.LayoutParams) tv_add_name.getLayoutParams();
             params.width = wh;
             params.height =  wh;
+            params2.width = wh;
+            params2.height =  wh;
             params.setMargins(PhoneUtils.dip2px(mContext,5),0,PhoneUtils.dip2px(mContext,5),0);
+            params2.setMargins(PhoneUtils.dip2px(mContext,5),0,PhoneUtils.dip2px(mContext,5),0);
             imageView.setLayoutParams(params);
+            tv_add_name.setLayoutParams(params2);
+            //gif,jpg,png,bmp,jpeg
+
+           String houzhui= bean.substring( bean.lastIndexOf("."),bean.length());
+            String name=bean.substring(bean.lastIndexOf("/")+1,bean.length());
+
+            Log.i("===","===houzhui="+houzhui);
+            if (houzhui.equals(".gif")||houzhui.equals(".jpg")
+                    ||houzhui.equals(".png")||houzhui.equals(".bmp")||houzhui.equals(".jpeg")) {
+                tv_add_name.setVisibility(View.GONE);
+                imageView.setVisibility(View.VISIBLE);
+                Glide.with(mContext).load(bean).error(R.color.c_press).into(imageView);
+
+            }else {
+                tv_add_name.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.GONE);
+                tv_add_name.setText(name);
+
+            }
 
 
-            Glide.with(mContext).load(bean).error(R.color.c_press).into(imageView);
+//            bean.
+
+
+
+
+
+
         }
     }
     @Override

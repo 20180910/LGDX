@@ -3,17 +3,17 @@ package com.sk.lgdx.module.home.activity;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
-import com.github.androidtools.SPUtils;
 import com.github.baseclass.rx.MySubscriber;
+import com.github.baseclass.view.MyDialog;
 import com.github.customview.MyRadioButton;
 import com.sk.lgdx.Config;
 import com.sk.lgdx.GetSign;
 import com.sk.lgdx.R;
 import com.sk.lgdx.base.BaseActivity;
-import com.sk.lgdx.base.BaseObj;
 import com.sk.lgdx.base.MyCallBack;
 import com.sk.lgdx.broadcast.MyOperationBro;
 import com.sk.lgdx.module.home.event.StudyEvent;
@@ -21,7 +21,10 @@ import com.sk.lgdx.module.home.fragment.HomeFragment;
 import com.sk.lgdx.module.home.fragment.MyFragment;
 import com.sk.lgdx.module.home.fragment.StudyFragment;
 import com.sk.lgdx.module.home.fragment.TaoLunFragment;
-import com.sk.lgdx.network.ApiRequest;
+import com.sk.lgdx.module.home.network.ApiRequest;
+import com.sk.lgdx.module.home.network.response.BanbengengxinObj;
+import com.sk.lgdx.tools.download.entity.AppInfo;
+import com.sk.lgdx.tools.download.service.DownloadService;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -73,10 +76,20 @@ public class MainActivity extends BaseActivity {
         status_bar.setLayoutParams(layoutParams);
         status_bar.setBackgroundColor(getResources().getColor(R.color.white));*/
 //        setBroadcast();
+
+
+
+
+
+
+
+
         selectButton = rb_home;
         homeFragment = new HomeFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.layout_main_content, homeFragment).commitAllowingStateLoss();
     }
+
+
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -90,33 +103,65 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        if ("0".equals(getUserId())) {
-//            STActivity(LoginActivity.class);
-//        }
 
     }
 
     @Override
     protected void initData() {
-//        getPaymentURL(1);//获取支付宝回传地址
-//        getPaymentURL(2);//获取微信回传地址
+//        showLoading();
+//        getVersionUpdate();
     }
-    private void getPaymentURL(int type) {
-        Map<String,String> map=new HashMap<String,String>();
-        map.put("payment_type",type+"");
-        map.put("sign", GetSign.getSign(map));
-        ApiRequest.paymentURL(map, new MyCallBack<BaseObj>(mContext) {
+    private void getVersionUpdate() {
+
+        Map<String,String>map=new HashMap<String,String>();
+        map.put("rnd",getRnd());
+        map.put("sign",GetSign.getSign(map));
+        ApiRequest.getVersionUpdate(map, new MyCallBack<BanbengengxinObj>(mContext) {
             @Override
-            public void onSuccess(BaseObj obj) {
-                if(obj.getPayment_type()==1){
-                    SPUtils.setPrefString(mContext,Config.payType_ZFB,obj.getPayment_url());
-                }else{
-                    SPUtils.setPrefString(mContext,Config.payType_WX,obj.getPayment_url());
+            public void onSuccess(BanbengengxinObj obj) {
+                dismissLoading();
+                Log.i("===","===getAppVersionCode="+getAppVersionCode());
+
+                if (obj.getAndroid_version()>getAppVersionCode()) {
+
+                    MyDialog.Builder mDialog=new MyDialog.Builder(mContext);
+                    mDialog.setMessage("检测到app有新版本是否更新?");
+                    mDialog.setNegativeButton((dialog, which) -> dialog.dismiss());
+                    mDialog.setPositiveButton((dialog, which) -> {
+                        dialog.dismiss();
+                        AppInfo info=new AppInfo();
+                        info.setUrl(obj.getAndroid_vs_url());
+                        info.setHouZhui("apk");
+                        info.setFileName("lgdx");
+                        info.setTitle("上理传播E学堂");
+                        info.setImage("lgdx上理传播E学堂");
+                        info.setId(obj.getAndroid_version()+"");
+                        downloadApp(info);
+                    });
+                    mDialog.create().show();
+
+                }else {
+
+
+
+
+
                 }
+
+
             }
         });
 
+
+
+
     }
+    private void downloadApp(AppInfo info) {
+       showMsg("上理传播E学堂正在下载中...");
+        DownloadService.intentDownload(mContext, info);
+    }
+
+
 
     @Override
     protected void initRxBus() {

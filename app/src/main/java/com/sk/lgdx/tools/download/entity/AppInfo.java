@@ -29,6 +29,15 @@ public class AppInfo implements Serializable {
     private String downloadPerSize;
     private int status;
     private boolean isSelect;
+    private int banbenhao;
+
+    public int getBanbenhao() {
+        return banbenhao;
+    }
+
+    public void setBanbenhao(int banbenhao) {
+        this.banbenhao = banbenhao;
+    }
 
     public boolean isSelect() {
         return isSelect;

@@ -90,32 +90,91 @@
         android:paddingRight="5dp"
         android:paddingTop="10dp"
         >
-
-        <ImageView
-            android:id="@+id/iv_item_my_home_work_img1"
+        <RelativeLayout
+            android:id="@+id/rl_item_my_home_work_img1"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_weight="1"
-            android:src="@drawable/banner"
-            />
+            >
+            <ImageView
+                android:id="@+id/iv_item_my_home_work_img1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:src="@drawable/banner"
+                />
+            <TextView
+                android:visibility="gone"
+                android:padding="5dp"
+                android:id="@+id/tv_item_my_home_work_img1"
+                android:layout_width="match_parent"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:background="@color/home_text_color"
+                android:layout_height="match_parent"
+                android:text=""
+                />
 
-        <ImageView
-            android:id="@+id/iv_item_my_home_work_img2"
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_item_my_home_work_img2"
             android:layout_width="0dp"
             android:layout_height="80dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
             android:layout_weight="1"
-            android:src="@drawable/banner"
-            />
+            >
+            <ImageView
+                android:id="@+id/iv_item_my_home_work_img2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@drawable/banner"
+                android:layout_centerInParent="true"
+                />
+            <TextView
+                android:visibility="gone"
+                android:padding="5dp"
+                android:id="@+id/tv_item_my_home_work_img2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text=""
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:background="@color/home_text_color"
+              />
 
-        <ImageView
-            android:id="@+id/iv_item_my_home_work_img3"
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/rl_item_my_home_work_img3"
             android:layout_width="0dp"
             android:layout_height="80dp"
             android:layout_weight="1"
-            android:src="@drawable/banner"
-            />
+            >
+            <ImageView
+                android:id="@+id/iv_item_my_home_work_img3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerInParent="true"
+                android:src="@drawable/banner"
+                />
+            <TextView
+                android:visibility="gone"
+                android:padding="5dp"
+                android:id="@+id/tv_item_my_home_work_img3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text=""
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:gravity="center"
+                android:background="@color/home_text_color"
+                />
+
+        </RelativeLayout>
+
+
+
+
     </LinearLayout>
 
     <View

@@ -11,6 +11,7 @@ import java.io.File;
  */
 public class FileUtils {
     public static final String DOWNLOAD_DIR = "lgdxdownload";
+    public static final String DOWNLOAD_DIR2 = "lgdx";
 
     public static final File getDownloadDir() {
         /*if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -18,6 +19,17 @@ public class FileUtils {
         }
         return new File(context.getCacheDir(), DOWNLOAD_DIR);*/
         File file = new File(Environment.getExternalStorageDirectory(), DOWNLOAD_DIR);
+        if(!file.exists()){
+            file.mkdirs();
+        }
+        return file;
+    }
+    public static final File getDownloadDir2() {
+        /*if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+            return new File(context.getExternalCacheDir(), DOWNLOAD_DIR);
+        }
+        return new File(context.getCacheDir(), DOWNLOAD_DIR);*/
+        File file = new File(Environment.getExternalStorageDirectory(), DOWNLOAD_DIR2);
         if(!file.exists()){
             file.mkdirs();
         }

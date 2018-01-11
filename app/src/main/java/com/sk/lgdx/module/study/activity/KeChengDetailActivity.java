@@ -104,7 +104,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
 
     private boolean isPlay;
     private boolean isPause;
-    String videoUrl = "",pdfUrl="";
+    String videoUrl = "",pdfUrl="",imgUrl="",attachmentUrl;
 
     private OrientationUtils orientationUtils;
 
@@ -178,7 +178,7 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
                 detailFragment.setCourseware(obj.getCourseware_introduction());
                 evaluateFragment.setComment_count(obj.getComment_count());
                 evaluateFragment.setCourseware_id(obj.getCourseware_id());
-                videoUrl = obj.getVideo_pdf();
+                attachmentUrl = obj.getAttachment();
 
                 if (obj.getIs_collect().equals("0")) {
                     iv_kecheng_collection.setImageDrawable(mContext.getResources().getDrawable(R.drawable.study_collnect_normal));
@@ -227,13 +227,13 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
             public void onMyNext(DownLoadSuccessEvent event) {
                 if (event.type.equals("success")) {
                     getDownloadRecord();
-                    showMsg("下载已完成");
+                    showMsg("下载已完成。请到个人中心->我的下载中查看。");
 
                 }else if (event.type.equals("yes")){
-                    showMsg("已下载");
+                    showMsg("已下载。请到个人中心->我的下载中查看。");
 
                 }else if (event.type.equals("no")){
-                    showMsg("正在下载中");
+                    showMsg("下载中...");
 
                 }
                 //courseware_id
@@ -275,21 +275,32 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
     }
 
     private void getValue() {
+
         type = getIntent().getStringExtra(Constant.IParam.type);
         image_url = getIntent().getStringExtra(Constant.IParam.image_url);
         Log.d("=========", "==image_url==" + image_url);
         courseware_id = getIntent().getStringExtra(Constant.IParam.courseware_id);
+
         if (type.equals("0")) {
             videoUrl = getIntent().getStringExtra(Constant.IParam.video_pdf);
             getVideo(videoUrl,image_url);
             rl_kecheng_detail_video.setVisibility(View.VISIBLE);
             rl_kecheng_detail_pdf.setVisibility(View.GONE);
 
-        } else {
+        }else if (type.equals("1")){
             pdfUrl=getIntent().getStringExtra(Constant.IParam.video_pdf);
             rl_kecheng_detail_video.setVisibility(View.GONE);
             rl_kecheng_detail_pdf.setVisibility(View.VISIBLE);
             Glide.with(mContext).load(image_url).error(R.color.c_press).into(iv_kecheng_detail_pdf);
+
+
+        }else {
+            imgUrl=getIntent().getStringExtra(Constant.IParam.video_pdf);
+            rl_kecheng_detail_video.setVisibility(View.GONE);
+            rl_kecheng_detail_pdf.setVisibility(View.VISIBLE);
+            tv_kecheng_detail_bg.setVisibility(View.GONE);
+            tv_kecheng_detail_look.setVisibility(View.GONE);
+            Glide.with(mContext).load(imgUrl).error(R.color.c_press).into(iv_kecheng_detail_pdf);
 
 
         }
@@ -557,13 +568,13 @@ public class KeChengDetailActivity extends BaseActivity implements ViewPager.OnP
 
 
     private void startDownload() {
-        if (TextUtils.isEmpty(videoUrl)) {
-            showMsg("无效下载地址");
+        if (TextUtils.isEmpty(attachmentUrl)) {
+            showMsg("暂无附件下载");
             return;
         }
 
 
-        AppInfo info = new AppInfo(studyDetailObj.getCourseware_id(), studyDetailObj.getTitle(), studyDetailObj.getTitle(), image_url, studyDetailObj.getVideo_pdf());
+        AppInfo info = new AppInfo(studyDetailObj.getCourseware_id(), studyDetailObj.getTitle(), studyDetailObj.getTitle(), image_url, studyDetailObj.getAttachment());
         showLoading();
         RXStart(new IOCallBack<Boolean>() {
             @Override

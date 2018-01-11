@@ -8,9 +8,10 @@ import java.util.List;
 
 public class StudentOperationListObj {
 
+
     /**
-     * add_time : 12月18日作业
-     * operation_list : [{"operation_id":5,"title":"管理系统","end_time":"12月22日","is_submit":1,"operation_submit":[{"content":"啦啦啦啦","operation_image":["http://121.40.186.118:1554/upload/tijiaozuoye.png","http://121.40.186.118:1554/upload/tijiaozuoye.png","http://121.40.186.118:1554/upload/tijiaozuoye.png"]}]}]
+     * add_time : 今日作业
+     * operation_list : [{"operation_id":17,"title":"毛概理论","end_time":"1月13日","is_submit":1,"operation_submit":[{"operation_submit_id":47,"content":"啦啦啦啦啦啦啦","operation_image":[{"id":44,"images":"http://121.40.186.118:1554/upload/201801/10/2017-12-16-04-17-59.txt"},{"id":45,"images":"http://121.40.186.118:1554/upload/201801/10/2017-12-16-04-17-58.txt"},{"id":46,"images":"http://121.40.186.118:1554/upload/201801/10/c1260e371530889eb52a4d4b75188a1b.jpg"}]}]}]
      */
 
     private String add_time;
@@ -34,11 +35,11 @@ public class StudentOperationListObj {
 
     public static class OperationListBean {
         /**
-         * operation_id : 5
-         * title : 管理系统
-         * end_time : 12月22日
+         * operation_id : 17
+         * title : 毛概理论
+         * end_time : 1月13日
          * is_submit : 1
-         * operation_submit : [{"content":"啦啦啦啦","operation_image":["http://121.40.186.118:1554/upload/tijiaozuoye.png","http://121.40.186.118:1554/upload/tijiaozuoye.png","http://121.40.186.118:1554/upload/tijiaozuoye.png"]}]
+         * operation_submit : [{"operation_submit_id":47,"content":"啦啦啦啦啦啦啦","operation_image":[{"id":44,"images":"http://121.40.186.118:1554/upload/201801/10/2017-12-16-04-17-59.txt"},{"id":45,"images":"http://121.40.186.118:1554/upload/201801/10/2017-12-16-04-17-58.txt"},{"id":46,"images":"http://121.40.186.118:1554/upload/201801/10/c1260e371530889eb52a4d4b75188a1b.jpg"}]}]
          */
 
         private int operation_id;
@@ -89,12 +90,22 @@ public class StudentOperationListObj {
 
         public static class OperationSubmitBean {
             /**
-             * content : 啦啦啦啦
-             * operation_image : ["http://121.40.186.118:1554/upload/tijiaozuoye.png","http://121.40.186.118:1554/upload/tijiaozuoye.png","http://121.40.186.118:1554/upload/tijiaozuoye.png"]
+             * operation_submit_id : 47
+             * content : 啦啦啦啦啦啦啦
+             * operation_image : [{"id":44,"images":"http://121.40.186.118:1554/upload/201801/10/2017-12-16-04-17-59.txt"},{"id":45,"images":"http://121.40.186.118:1554/upload/201801/10/2017-12-16-04-17-58.txt"},{"id":46,"images":"http://121.40.186.118:1554/upload/201801/10/c1260e371530889eb52a4d4b75188a1b.jpg"}]
              */
 
+            private int operation_submit_id;
             private String content;
-            private List<String> operation_image;
+            private List<OperationImageBean> operation_image;
+
+            public int getOperation_submit_id() {
+                return operation_submit_id;
+            }
+
+            public void setOperation_submit_id(int operation_submit_id) {
+                this.operation_submit_id = operation_submit_id;
+            }
 
             public String getContent() {
                 return content;
@@ -104,12 +115,38 @@ public class StudentOperationListObj {
                 this.content = content;
             }
 
-            public List<String> getOperation_image() {
+            public List<OperationImageBean> getOperation_image() {
                 return operation_image;
             }
 
-            public void setOperation_image(List<String> operation_image) {
+            public void setOperation_image(List<OperationImageBean> operation_image) {
                 this.operation_image = operation_image;
+            }
+
+            public static class OperationImageBean {
+                /**
+                 * id : 44
+                 * images : http://121.40.186.118:1554/upload/201801/10/2017-12-16-04-17-59.txt
+                 */
+
+                private int id;
+                private String images;
+
+                public int getId() {
+                    return id;
+                }
+
+                public void setId(int id) {
+                    this.id = id;
+                }
+
+                public String getImages() {
+                    return images;
+                }
+
+                public void setImages(String images) {
+                    this.images = images;
+                }
             }
         }
     }

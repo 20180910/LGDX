@@ -335,6 +335,7 @@ public class TaolunDetailsActivity extends BaseActivity {
             case R.id.iv_taolun_details_collection:
                 break;
             case R.id.iv_taolun_details_share:
+                showFenXiang();
                 break;
             case R.id.tv_taolun_details_pinglun:
 

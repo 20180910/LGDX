@@ -142,6 +142,15 @@ public class ApiRequest extends BaseApiRequest {
         getGeneralClient(IRequest.class).getNextLesson(map).enqueue(callBack);
     }
 
+    //Android版本更新
+    public static void getVersionUpdate(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getVersionUpdate(map).enqueue(callBack);
+    }
+
 
     /**************************************分割线******************************************/
 

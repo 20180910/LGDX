@@ -14,6 +14,7 @@ public class StudyDetailObj extends BaseObj {
     /**
      * courseware_id : 1
      * video_pdf : http://121.40.186.118:1554/upload/201712/08/201712081041304454.mp4
+     * attachment : http://121.40.186.118:1554/upload/201712/08/201712081041304454.mp4
      * title : 小葵花爸爸课堂开课啦
      * keynote_speaker_image :
      * individuality_signature :
@@ -28,6 +29,7 @@ public class StudyDetailObj extends BaseObj {
 
     private String courseware_id;
     private String video_pdf;
+    private String attachment;
     private String title;
     private String individuality_signature;
     private String keynote_speaker_image;
@@ -37,6 +39,14 @@ public class StudyDetailObj extends BaseObj {
 //    private String is_collect;
     private String thumbup_count;
     private String comment_count;
+
+    public String getAttachment() {
+        return attachment;
+    }
+
+    public void setAttachment(String attachment) {
+        this.attachment = attachment;
+    }
 
     public String getIndividuality_signature() {
         return individuality_signature;

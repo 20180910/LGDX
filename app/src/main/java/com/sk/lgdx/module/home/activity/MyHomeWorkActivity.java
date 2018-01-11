@@ -3,28 +3,35 @@ package com.sk.lgdx.module.home.activity;
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.github.baseclass.adapter.LoadMoreAdapter;
 import com.github.baseclass.adapter.LoadMoreViewHolder;
+import com.github.baseclass.rx.IOCallBack;
 import com.github.baseclass.rx.MySubscriber;
 import com.sk.lgdx.GetSign;
 import com.sk.lgdx.R;
 import com.sk.lgdx.base.BaseActivity;
 import com.sk.lgdx.base.MyCallBack;
 import com.sk.lgdx.module.home.adapter.MyHomeWorkAdapter;
+import com.sk.lgdx.module.home.event.DownLoadSuccessEvent;
 import com.sk.lgdx.module.home.event.MyHomeWorkEvent;
 import com.sk.lgdx.module.home.event.TijiaozuoyeEvent;
+import com.sk.lgdx.module.home.event.WenjianEvent;
 import com.sk.lgdx.module.home.network.ApiRequest;
 import com.sk.lgdx.module.home.network.response.StudentOperationListObj;
 import com.sk.lgdx.module.study.Constant;
+import com.sk.lgdx.tools.download.entity.AppInfo;
+import com.sk.lgdx.tools.download.util.DownloadUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
+import rx.Subscriber;
 
 /**
  * Created by Administrator on 2017/12/5.
@@ -126,6 +133,60 @@ public class MyHomeWorkActivity extends BaseActivity {
                 getData(1,false);
 
 
+            }
+        });
+        getRxBusEvent(WenjianEvent.class, new MySubscriber<WenjianEvent>() {
+            @Override
+            public void onMyNext(WenjianEvent event) {
+                startDownload(event.id,event.name,event.attachment);
+
+
+
+
+            }
+        });
+
+
+        getRxBusEvent(DownLoadSuccessEvent.class, new MySubscriber<DownLoadSuccessEvent>() {
+            @Override
+            public void onMyNext(DownLoadSuccessEvent event) {
+                if (event.type.equals("success")) {
+                    showMsg("下载已完成。请到个人中心->我的下载中查看。");
+
+                }else if (event.type.equals("yes")){
+                    showMsg("已下载。请到个人中心->我的下载中查看。");
+
+                }else if (event.type.equals("no")){
+                    showMsg("下载中...");
+
+                }
+
+
+
+            }
+        });
+
+    }
+    private void startDownload(String id,String name,String attachment ) {
+        if (TextUtils.isEmpty(attachment)) {
+            showMsg("暂无下载");
+            return;
+        }
+
+
+        AppInfo info = new AppInfo(id, name, name, "",attachment);
+        showLoading();
+        RXStart(new IOCallBack<Boolean>() {
+            @Override
+            public void call(Subscriber<? super Boolean> subscriber) {
+                subscriber.onNext(DownloadUtils.isExistFile(info));
+                subscriber.onCompleted();
+            }
+
+            @Override
+            public void onMyNext(Boolean isExist) {
+                dismissLoading();
+                DownloadUtils.startDownload(isExist, mContext, info);
             }
         });
     }

@@ -10,10 +10,13 @@ import com.sk.lgdx.network.response.FenXiangObj;
 import java.util.List;
 import java.util.Map;
 
+import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.QueryMap;
 
 /**
@@ -35,9 +38,13 @@ public interface IRequest {
     @GET("api/SHLGPub/GetEmail")
     Call<ResponseObj<BaseObj>> getSMSCode(@QueryMap Map<String, String> map);
 
+    //上传文件
+    @POST("api/SHLGPub/PostUploadFile")
+    Call<ResponseObj<BaseObj>> postUploadFile(@QueryMap Map<String, String> map, @Part MultipartBody.Part file);
 
-
-
+    @Multipart
+    @POST("api/SHLGPub/PostUploadFile")
+    Call<ResponseObj<BaseObj>> uploadFile(@QueryMap Map<String, String> map, @Part MultipartBody.Part file);
 
 
 

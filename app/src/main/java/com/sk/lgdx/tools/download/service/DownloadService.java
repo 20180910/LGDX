@@ -128,6 +128,11 @@ public class DownloadService extends Service {
     }
 
     private void download(final AppInfo appInfo) {
+
+
+
+
+
         final DownloadRequest request = new DownloadRequest.Builder()
                 .setName(appInfo.getFileName()+"."+appInfo.getHouZhui())
                 .setUri(appInfo.getUrl())

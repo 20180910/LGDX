@@ -52,7 +52,7 @@ public class MyCollectionActivity extends BaseActivity {
 
 
 
-
+//查看
 
         adapter = new LoadMoreAdapter<CollectObj.CourseWareBean>(mContext, R.layout.item_my_collection, pageSize) {
             @Override
@@ -65,19 +65,26 @@ public class MyCollectionActivity extends BaseActivity {
                         Log.d("=========", "video_pdf====" + video_pdf);
                         Log.d("=========", "====" + bean.getImage_url());
                         Intent intent = new Intent();
-                        if (video_pdf.equals("mp4")) {
+                        if (video_pdf.equals("mp4")||video_pdf.equals("MP4")) {
                             intent.putExtra(Constant.IParam.type, "0");
                             intent.putExtra(Constant.IParam.courseware_id, bean.getCourseware_id());
                             intent.putExtra(Constant.IParam.video_pdf, bean.getVideo_pdf());
                             intent.putExtra(Constant.IParam.image_url, bean.getImage_url());
                             STActivity(intent, KeChengDetailActivity.class);
                             Log.d("=========", "==intent==" + bean.getImage_url());
-                        } else {
+                        } else if (video_pdf.equals("pdf")||video_pdf.equals("PDF")){
                             intent.putExtra(Constant.IParam.type, "1");
                             intent.putExtra(Constant.IParam.courseware_id, bean.getCourseware_id());
                             intent.putExtra(Constant.IParam.video_pdf, bean.getVideo_pdf());
                             intent.putExtra(Constant.IParam.image_url, bean.getImage_url());
                             STActivity(intent, KeChengDetailActivity.class);
+                        }else {
+                            intent.putExtra(Constant.IParam.type, "2");
+                            intent.putExtra(Constant.IParam.courseware_id, bean.getCourseware_id());
+                            intent.putExtra(Constant.IParam.video_pdf, bean.getVideo_pdf());
+                            intent.putExtra(Constant.IParam.image_url, bean.getImage_url());
+                            STActivity(intent, KeChengDetailActivity.class);
+
                         }
                     }
                 });
