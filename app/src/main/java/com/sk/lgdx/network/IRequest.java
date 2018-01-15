@@ -2,6 +2,7 @@ package com.sk.lgdx.network;
 
 import com.sk.lgdx.base.BaseObj;
 import com.sk.lgdx.base.ResponseObj;
+import com.sk.lgdx.module.home.network.response.BanbengengxinObj;
 import com.sk.lgdx.module.home.network.response.CitySearchObj;
 import com.sk.lgdx.module.my.network.request.UploadImgBody;
 import com.sk.lgdx.module.my.network.response.ProvinceObj;
@@ -47,6 +48,17 @@ public interface IRequest {
     Call<ResponseObj<BaseObj>> uploadFile(@QueryMap Map<String, String> map, @Part MultipartBody.Part file);
 
 
+
+
+    //获取分享信息
+    @GET ("api/SHLGPub/GetShareInformations")
+    Call<ResponseObj<FenXiangObj>> getShareInformations(@QueryMap Map<String, String> map);
+
+
+
+    //Android版本更新
+    @GET ("api/SHLGPub/GetVersionUpdate")
+    Call<ResponseObj<BanbengengxinObj>> getVersionUpdate(@QueryMap Map<String, String> map);
 
 /**********************************分割线**************************************/
 

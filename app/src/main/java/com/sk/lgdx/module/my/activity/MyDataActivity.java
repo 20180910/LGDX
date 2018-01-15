@@ -170,6 +170,7 @@ public class MyDataActivity extends BaseActivity {
     private void showSelectPhotoDialog() {
         if (selectPhotoDialog == null) {
             View sexView= LayoutInflater.from(mContext).inflate(R.layout.popu_select_photo,null);
+            sexView.findViewById(R.id.tv_take_wenjian).setVisibility(View.GONE);
             sexView.findViewById(R.id.tv_select_photo).setOnClickListener(new MyOnClickListener() {
                 @Override
                 protected void onNoDoubleClick(View view) {

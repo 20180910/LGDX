@@ -106,7 +106,6 @@ public class HomeFragment extends BaseFragment {
     protected void initView() {
         rv_home_xueyuan.setFocusable(false);
 
-
         typeAdapter = new BaseRecyclerAdapter<TypeAssemBlageObj>(mContext, R.layout.item_home_type) {
             @Override
             public void bindData(RecyclerViewHolder holder, int i, TypeAssemBlageObj obj) {
@@ -186,7 +185,6 @@ public class HomeFragment extends BaseFragment {
         rv_home_xueyuan.setNestedScrollingEnabled(false);
         rv_home_xueyuan.addItemDecoration(getItemDivider());
         rv_home_xueyuan.setAdapter(adapter);
-        nsv.scrollTo(0, 0);
 
     }
 
@@ -195,8 +193,8 @@ public class HomeFragment extends BaseFragment {
         showProgress();
         getRoastingChart();
         getTypeAssemBlage();
-        getData(1, false);
         getOtherData();
+        getData(1, false);
 
     }
 

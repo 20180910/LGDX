@@ -39,6 +39,7 @@ import com.github.baseclass.adapter.LoadMoreAdapter;
 import com.sk.lgdx.Config;
 import com.sk.lgdx.GetSign;
 import com.sk.lgdx.R;
+import com.sk.lgdx.tools.ShareUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -46,6 +47,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Random;
 
@@ -83,6 +85,7 @@ public abstract class BaseActivity extends IBaseActivity implements ProgressLayo
     protected boolean isPause;
     protected ProgressLayout pl_load;
     protected boolean canRefresh=true;
+    ShareUtil shareUtil;
     /****************************************************/
     protected abstract int getContentView();
 
@@ -171,6 +174,7 @@ public abstract class BaseActivity extends IBaseActivity implements ProgressLayo
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        shareUtil=new ShareUtil(mContext);
         if (getRequestedOrientation() != ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
@@ -635,6 +639,27 @@ public abstract class BaseActivity extends IBaseActivity implements ProgressLayo
 //                        return;
 //                    }
 //                    fenXiang(SHARE_MEDIA.WEIXIN);
+
+
+                    String share_link=  SPUtils.getPrefString(mContext, Config.share_link,"");
+                    String content=  SPUtils.getPrefString(mContext, Config.content,"");
+                    if (share_link.equals("")) {
+                        showMsg("获取分享内容失败");
+                    }else {
+
+                        if (shareUtil.checkInstall("com.tencent.mm")) {
+                            shareUtil.shareUrl("com.tencent.mm", "com.tencent.mm.ui.tools.ShareImgUI", share_link,
+                                    "上理传播E学堂", content);
+                        } else {
+                            shareUtil.toInstallWebView("http://im.qq.com/mobileqq/");
+                        }
+
+
+                    }
+
+
+
+
                     fenXiangDialog.dismiss();
 
                 }
@@ -647,6 +672,37 @@ public abstract class BaseActivity extends IBaseActivity implements ProgressLayo
 //                        return;
 //                    }
 //                    fenXiang(SHARE_MEDIA.WEIXIN_CIRCLE);
+
+
+                    String testImgPath = "";
+                    String share_link=  SPUtils.getPrefString(mContext, Config.share_link,"");
+                    try {
+                        testImgPath = Environment.getExternalStorageDirectory().getCanonicalPath()+"/lgdx/logo.jpg";
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                        showMsg("分享图片获取失败");
+                        Log.d("====","读取图片异常=="+e.getMessage());
+                    }
+                    Log.d("====","testImgPath=="+testImgPath);
+                    if (testImgPath.equals("")) {
+                        showMsg("分享图片获取失败");
+                        return;
+                    }
+                    if (share_link.equals("")) {
+                        showMsg("分享连接获取失败");
+                        return;
+                    }
+
+
+                    File file = new File(testImgPath);
+
+                    shareUtil.shareImgToWXCircle(share_link, "com.tencent.mm",
+                            "com.tencent.mm.ui.tools.ShareToTimeLineUI", file);
+
+
+
+
+
                     fenXiangDialog.dismiss();
 
                 }
@@ -659,6 +715,31 @@ public abstract class BaseActivity extends IBaseActivity implements ProgressLayo
 //                        return;
 //                    }
 //                    fenXiang(SHARE_MEDIA.QQ);
+
+
+
+                    String share_link=  SPUtils.getPrefString(mContext, Config.share_link,"");
+                    String content=  SPUtils.getPrefString(mContext, Config.content,"");
+                    if (share_link.equals("")) {
+                        showMsg("获取分享内容失败");
+                    }else {
+
+                        if (shareUtil.checkInstall("com.tencent.mobileqq")) {
+                            shareUtil.shareUrl("com.tencent.mobileqq", "com.tencent.mobileqq.activity.JumpActivity", share_link,
+                                    "上理传播E学堂", content);
+                        } else {
+                            shareUtil.toInstallWebView("http://im.qq.com/mobileqq/");
+                        }
+
+
+                    }
+
+
+
+
+
+
+
                     fenXiangDialog.dismiss();
                 }
             });

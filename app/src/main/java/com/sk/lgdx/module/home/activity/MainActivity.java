@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 
+import com.github.androidtools.SPUtils;
 import com.github.baseclass.rx.MySubscriber;
 import com.github.baseclass.view.MyDialog;
 import com.github.customview.MyRadioButton;
@@ -21,8 +22,10 @@ import com.sk.lgdx.module.home.fragment.HomeFragment;
 import com.sk.lgdx.module.home.fragment.MyFragment;
 import com.sk.lgdx.module.home.fragment.StudyFragment;
 import com.sk.lgdx.module.home.fragment.TaoLunFragment;
-import com.sk.lgdx.module.home.network.ApiRequest;
 import com.sk.lgdx.module.home.network.response.BanbengengxinObj;
+import com.sk.lgdx.network.ApiRequest;
+import com.sk.lgdx.network.response.FenXiangObj;
+import com.sk.lgdx.tools.SDFileHelper;
 import com.sk.lgdx.tools.download.entity.AppInfo;
 import com.sk.lgdx.tools.download.service.DownloadService;
 
@@ -62,6 +65,7 @@ public class MainActivity extends BaseActivity {
     private MyRadioButton selectButton;
     private LocalBroadcastManager localBroadcastManager;
     private MyOperationBro myOperationBro;
+    SDFileHelper helper;
 
     @Override
     protected int getContentView() {
@@ -82,7 +86,7 @@ public class MainActivity extends BaseActivity {
 
 
 
-
+        helper = new SDFileHelper(this);
 
         selectButton = rb_home;
         homeFragment = new HomeFragment();
@@ -110,7 +114,31 @@ public class MainActivity extends BaseActivity {
     protected void initData() {
 //        showLoading();
 //        getVersionUpdate();
+//        getShareInformations();
+
     }
+
+
+    private void getShareInformations() {
+        Map<String, String> map = new HashMap<String, String>();
+        map.put("rnd", getRnd());
+        map.put("sign", GetSign.getSign(map));
+        ApiRequest.getShareInformations(map, new MyCallBack<FenXiangObj>(mContext) {
+            @Override
+            public void onSuccess(FenXiangObj obj) {
+                SPUtils.setPrefString(mContext, Config.share_link, obj.getShare_link());
+                SPUtils.setPrefString(mContext, Config.content, obj.getContent());
+                SPUtils.setPrefString(mContext, Config.shareImgUrl, obj.getImg());
+
+                helper.savePicture("logo.jpg",obj.getImg());
+            }
+
+
+        });
+
+    }
+
+
     private void getVersionUpdate() {
 
         Map<String,String>map=new HashMap<String,String>();

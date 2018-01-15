@@ -1,6 +1,7 @@
 package com.sk.lgdx.module.my.activity;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import com.sk.lgdx.base.BaseActivity;
 import com.sk.lgdx.base.BaseObj;
 import com.sk.lgdx.base.MyCallBack;
 import com.sk.lgdx.module.my.network.ApiRequest;
+import com.sk.lgdx.tools.CacheUtil;
 import com.suke.widget.SwitchButton;
 
 import java.util.HashMap;
@@ -39,6 +41,7 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.tv_setting_sign_out)
     TextView tv_setting_sign_out;
     boolean user_switch;
+    String huancunNum="0K";
 
     @Override
     protected int getContentView() {
@@ -49,6 +52,14 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        try {
+            huancunNum= CacheUtil.getExternalCacheSize(mContext);
+            Log.i("===","===huancunNum="+huancunNum);
+            tv_setting_huancun.setText(huancunNum);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.i("===","===读取缓存异常="+e.getMessage());
+        }
         user_switch=SPUtils.getPrefBoolean(mContext,Config.user_switch,false);
         if (user_switch) {
             sb_setting.setChecked(true);
@@ -103,6 +114,23 @@ public class SettingActivity extends BaseActivity {
                 STActivity(SettingPwdActivity.class);
                 break;
             case R.id.ll_setting_huancun:
+
+                if (huancunNum.equals("0K")) {
+                    showMsg("暂无缓存");
+                }else {
+                    CacheUtil.clearAllCache(mContext);
+                    showMsg("清除缓存成功");
+                    try {
+                        huancunNum=CacheUtil.getExternalCacheSize(mContext);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Log.i("===","===读取缓存异常="+e.getMessage());
+                        huancunNum="0K";
+                    }
+                    tv_setting_huancun.setText(huancunNum);
+
+                }
+
                 break;
             case R.id.tv_setting_sign_out:
                 mDialog = new MyDialog.Builder(mContext);

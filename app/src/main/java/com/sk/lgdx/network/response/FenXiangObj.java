@@ -8,9 +8,9 @@ import com.sk.lgdx.base.BaseObj;
 
 public class FenXiangObj extends BaseObj {
     /**
-     * title : 优优点餐
-     * content : 优优点餐
-     * share_link : https://www.baidu.com/
+     * title : 上海理工大学
+     * content : 上海理工大学是一所以工学为主，工学、理学、经济学、管理学、文学、法学、艺术学等多学科协调发展的应用研究型大学，是国家国防科技工业局与上海市人民政府共建高校，上海市重点建设大学。
+     * share_link : http://www.usst.edu.cn/
      */
 
     private String title;

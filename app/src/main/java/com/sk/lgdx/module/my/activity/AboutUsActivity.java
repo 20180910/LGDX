@@ -89,6 +89,7 @@ public class AboutUsActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.tv_about_us_share:
+                showFenXiang();
                 break;
             case R.id.tv_about_us_wangzhan:
                 Intent intent=new Intent();//创建Intent对象

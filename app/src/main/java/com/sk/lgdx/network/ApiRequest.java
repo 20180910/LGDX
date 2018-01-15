@@ -64,6 +64,27 @@ public class ApiRequest extends BaseApiRequest {
     }
 
 
+    //获取分享信息
+    public static void getShareInformations(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getShareInformations(map).enqueue(callBack);
+    }
+    //Android版本更新
+    public static void getVersionUpdate(Map map, MyCallBack callBack) {
+        if (notNetWork(callBack.getContext())) {
+            callBack.onFailure(null, new NoNetworkException(Config.noNetWork));
+            return;
+        }
+        getGeneralClient(IRequest.class).getVersionUpdate(map).enqueue(callBack);
+    }
+
+
+
+
+
 
 
 

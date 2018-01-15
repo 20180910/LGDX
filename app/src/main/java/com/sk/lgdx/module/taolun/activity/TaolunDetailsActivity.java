@@ -140,7 +140,7 @@ public class TaolunDetailsActivity extends BaseActivity {
                     et_taolun_details_discuss.setCursorVisible(false);
                     iv_taolun_details_discuss.setVisibility(View.VISIBLE);
                     iv_taolun_details_zan.setVisibility(View.VISIBLE);
-                    iv_taolun_details_share.setVisibility(View.VISIBLE);
+                    iv_taolun_details_share.setVisibility(View.GONE);
                     tv_taolun_details_pinglun.setVisibility(View.GONE);
 
                 }
