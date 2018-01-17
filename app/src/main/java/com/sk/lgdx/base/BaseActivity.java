@@ -266,9 +266,9 @@ public abstract class BaseActivity extends IBaseActivity implements ProgressLayo
         if (null != findViewById(R.id.pcfl_refresh)) {
             pcfl = (PtrClassicFrameLayout) findViewById(R.id.pcfl_refresh);
             pcfl.setLastUpdateTimeRelateObject(this);
-            pcfl.setOffsetXFlag((int) 0.5);
+            pcfl.setOffsetXFlag(3);
             pcfl.setHorizontalMoveFlag(3);
-            pcfl.setScaledTouchSlopFlag(3);
+            pcfl.setScaledTouchSlopFlag(0.5f);
             pcfl.disableWhenHorizontalMove(true);
             pcfl.setPtrHandler(new PtrDefaultHandler() {
                 @Override
