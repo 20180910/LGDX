@@ -113,7 +113,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void initData() {
 //        showLoading();
-//        getVersionUpdate();
+        getVersionUpdate();
 //        getShareInformations();
 
     }
